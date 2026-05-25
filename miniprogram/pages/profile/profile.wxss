@@ -1,0 +1,48 @@
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+}
+
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: #eef4e9;
+}
+
+.avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #276749;
+  font-weight: 700;
+}
+
+.profile-main {
+  flex: 1;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #eef0ea;
+  font-size: 30rpx;
+}
+
+.menu-item:last-child {
+  border-bottom: 0;
+}
+
+.small {
+  font-size: 30rpx;
+  margin-bottom: 16rpx;
+}
+
+.rule {
+  margin-bottom: 12rpx;
+  color: #4b5548;
+  font-size: 26rpx;
+  line-height: 1.5;
+}

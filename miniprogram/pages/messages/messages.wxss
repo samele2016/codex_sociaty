@@ -1,0 +1,4 @@
+.small {
+  font-size: 30rpx;
+  margin-bottom: 12rpx;
+}

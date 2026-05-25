@@ -1,0 +1,35 @@
+<view class="page">
+  <view class="section">
+    <view class="title">管理后台</view>
+    <view class="stats" wx:if="{{stats}}">
+      <view>待审 {{stats.pending || 0}}</view>
+      <view>举报 {{stats.reports || 0}}</view>
+      <view>用户 {{stats.users || 0}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="title small">待审核帖子</view>
+    <view wx:if="{{pendingPosts.length === 0}}" class="muted">暂无待审</view>
+    <view wx:for="{{pendingPosts}}" wx:key="_id" class="admin-item">
+      <view class="item-title">{{item.title}}</view>
+      <view class="muted">{{item.categoryLabel}} · {{item.content}}</view>
+      <view class="row">
+        <button size="mini" data-action="approvePost" data-id="{{item._id}}" bindtap="moderate">通过</button>
+        <button size="mini" data-action="removePost" data-id="{{item._id}}" bindtap="moderate">下架</button>
+        <button size="mini" data-action="featurePost" data-id="{{item._id}}" bindtap="moderate">精华</button>
+        <button size="mini" data-action="pinPost" data-id="{{item._id}}" bindtap="moderate">置顶</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="title small">举报处理</view>
+    <view wx:if="{{reports.length === 0}}" class="muted">暂无举报</view>
+    <view wx:for="{{reports}}" wx:key="_id" class="admin-item">
+      <view class="item-title">{{item.reason}}</view>
+      <view class="muted">{{item.detail || '用户提交了举报'}}</view>
+      <button size="mini" data-id="{{item._id}}" data-target="{{item.targetId}}" bindtap="handleReport">标记处理</button>
+    </view>
+  </view>
+</view>

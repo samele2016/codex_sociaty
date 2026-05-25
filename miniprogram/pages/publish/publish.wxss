@@ -1,0 +1,76 @@
+.form {
+  background: #ffffff;
+  border: 1rpx solid #e5e8df;
+  border-radius: 12rpx;
+  padding: 24rpx;
+}
+
+.field {
+  margin-bottom: 26rpx;
+}
+
+.label {
+  margin-bottom: 12rpx;
+  color: #374151;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+input,
+textarea,
+.picker {
+  width: 100%;
+  padding: 18rpx;
+  border: 1rpx solid #dfe4d8;
+  border-radius: 10rpx;
+  background: #fbfcf8;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+textarea {
+  height: 220rpx;
+}
+
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12rpx;
+}
+
+.image-wrap {
+  position: relative;
+}
+
+.image-wrap image,
+.add-image {
+  width: 100%;
+  height: 180rpx;
+  border-radius: 8rpx;
+  background: #eef4e9;
+}
+
+.add-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #276749;
+  font-size: 56rpx;
+}
+
+.remove {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 36rpx;
+  text-align: center;
+  border-radius: 50%;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.submit {
+  margin-top: 16rpx;
+}

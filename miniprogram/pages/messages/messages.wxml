@@ -1,0 +1,6 @@
+<view class="page">
+  <view wx:for="{{messages}}" wx:key="title" class="section">
+    <view class="title small">{{item.title}}</view>
+    <view class="muted">{{item.content}}</view>
+  </view>
+</view>

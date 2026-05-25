@@ -1,0 +1,29 @@
+<view class="page">
+  <view class="profile section">
+    <image wx:if="{{user.avatarUrl}}" class="avatar" src="{{user.avatarUrl}}" mode="aspectFill" />
+    <view wx:else class="avatar avatar-fallback">邻</view>
+    <view class="profile-main">
+      <view class="title">{{user.nickName || '社区邻居'}}</view>
+      <view class="muted">{{user.verified ? user.building + ' ' + user.unit : '未完成社区认证'}}</view>
+    </view>
+    <view class="tag">{{user.role === 'admin' ? '管理员' : user.verified ? '已认证' : '待认证'}}</view>
+  </view>
+
+  <view class="section">
+    <view class="menu-item" bindtap="goVerify">
+      <text>社区认证</text>
+      <text class="muted">邀请码/楼栋</text>
+    </view>
+    <view wx:if="{{user.role === 'admin'}}" class="menu-item" bindtap="goAdmin">
+      <text>管理后台</text>
+      <text class="muted">审核与举报</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="title small">社区公约</view>
+    <view class="rule">真实发布，线下面交请自行确认物品和安全。</view>
+    <view class="rule">商家广告和团购必须标明身份、价格和有效期。</view>
+    <view class="rule">求助信息请及时标记已解决，避免重复打扰。</view>
+  </view>
+</view>

@@ -1,0 +1,26 @@
+.form {
+  background: #ffffff;
+  border: 1rpx solid #e5e8df;
+  border-radius: 12rpx;
+  padding: 24rpx;
+}
+
+.field {
+  margin-bottom: 24rpx;
+}
+
+.label {
+  margin-bottom: 12rpx;
+  font-weight: 600;
+  font-size: 26rpx;
+}
+
+input {
+  width: 100%;
+  height: 76rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #dfe4d8;
+  border-radius: 10rpx;
+  background: #fbfcf8;
+  box-sizing: border-box;
+}

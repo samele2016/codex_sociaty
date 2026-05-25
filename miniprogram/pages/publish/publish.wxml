@@ -1,0 +1,50 @@
+<view class="page">
+  <view class="section">
+    <view class="title">发布邻里信息</view>
+    <view class="muted">广告和团购会先进入审核，其他分类通过安全检测后发布</view>
+  </view>
+
+  <view class="form">
+    <view class="field">
+      <view class="label">分类</view>
+      <picker mode="selector" range="{{categories}}" range-key="label" value="{{categoryIndex}}" bindchange="onCategoryChange">
+        <view class="picker">{{categories[categoryIndex].label}}</view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <view class="label">标题</view>
+      <input maxlength="40" placeholder="一句话说明你要发布什么" value="{{title}}" data-key="title" bindinput="onInput" />
+    </view>
+
+    <view class="field">
+      <view class="label">正文</view>
+      <textarea maxlength="1000" placeholder="补充详情、地点、时间、注意事项" value="{{content}}" data-key="content" bindinput="onInput" />
+    </view>
+
+    <view class="field">
+      <view class="label">联系方式</view>
+      <input maxlength="80" placeholder="仅认证邻居可见，可留微信号或面交说明" value="{{contact}}" data-key="contact" bindinput="onInput" />
+    </view>
+
+    <view class="field">
+      <view class="label">补充字段</view>
+      <input placeholder="价格/预算" data-key="price" bindinput="onFieldInput" />
+      <input placeholder="地点/自提点" data-key="place" bindinput="onFieldInput" />
+      <input placeholder="时间/截止时间" data-key="time" bindinput="onFieldInput" />
+    </view>
+
+    <view class="field">
+      <view class="label">图片</view>
+      <view class="image-list">
+        <view wx:for="{{images}}" wx:key="*this" class="image-wrap">
+          <image src="{{item}}" mode="aspectFill" />
+          <view class="remove" data-index="{{index}}" bindtap="removeImage">×</view>
+        </view>
+        <view wx:if="{{images.length < 6}}" class="add-image" bindtap="chooseImages">+</view>
+      </view>
+    </view>
+
+    <button class="button-primary submit" loading="{{submitting}}" bindtap="submit">提交发布</button>
+  </view>
+</view>

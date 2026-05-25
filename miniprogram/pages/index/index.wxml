@@ -1,0 +1,49 @@
+<view class="page">
+  <view class="hero">
+    <view>
+      <view class="title">邻里广场</view>
+      <view class="muted">闲置、求助、搭子、装修经验和社区团购</view>
+    </view>
+    <button class="post-button" size="mini" bindtap="onSortTap" data-sort="recommended">推荐</button>
+  </view>
+
+  <view class="search-row">
+    <input class="search-input" placeholder="搜索帖子、物品、技能" value="{{keyword}}" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearchConfirm" />
+    <button class="search-button" bindtap="onSearchConfirm">搜索</button>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x>
+    <view class="category-list">
+      <view wx:for="{{categories}}" wx:key="key" class="category {{activeCategory === item.key ? 'active' : ''}}" data-key="{{item.key}}" bindtap="onCategoryTap">
+        {{item.label}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="sort-row">
+    <view class="sort {{sort === 'latest' ? 'active' : ''}}" data-sort="latest" bindtap="onSortTap">最新</view>
+    <view class="sort {{sort === 'recommended' ? 'active' : ''}}" data-sort="recommended" bindtap="onSortTap">推荐</view>
+  </view>
+
+  <view wx:if="{{posts.length === 0 && !loading}}" class="empty">还没有内容，认证后发布第一条邻里信息</view>
+
+  <view wx:for="{{posts}}" wx:key="_id" class="post-card" data-id="{{item._id}}" bindtap="openDetail">
+    <view class="post-head">
+      <view class="tag">{{item.categoryLabel}}</view>
+      <view wx:if="{{item.pinned}}" class="pin">置顶</view>
+      <view wx:if="{{item.featured}}" class="feature">精华</view>
+    </view>
+    <view class="post-title">{{item.title}}</view>
+    <view class="post-content">{{item.content}}</view>
+    <view wx:if="{{item.images.length}}" class="image-grid">
+      <image wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill" />
+    </view>
+    <view class="post-meta">
+      <text>{{item.authorName || '邻居'}}</text>
+      <text>{{item.likeCount || 0}}赞</text>
+      <text>{{item.commentCount || 0}}评</text>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+</view>

@@ -1,0 +1,31 @@
+.stats,
+.row {
+  display: flex;
+  gap: 14rpx;
+  flex-wrap: wrap;
+  margin-top: 14rpx;
+}
+
+.stats view {
+  padding: 12rpx 18rpx;
+  background: #eef4e9;
+  color: #276749;
+  border-radius: 10rpx;
+  font-size: 24rpx;
+}
+
+.small {
+  font-size: 30rpx;
+  margin-bottom: 12rpx;
+}
+
+.admin-item {
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #eef0ea;
+}
+
+.item-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}

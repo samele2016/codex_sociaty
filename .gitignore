@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+node_modules/
+miniprogram_npm/
+cloudfunctions/**/node_modules/
+.env
+.env.*
+dist/
+coverage/

@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="section">
+    <view class="title">社区认证</view>
+    <view class="muted">认证后可发布、评论和查看联系方式</view>
+  </view>
+
+  <view class="form">
+    <view class="field">
+      <view class="label">邀请码</view>
+      <input placeholder="例如 A1-2026" value="{{code}}" data-key="code" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="label">楼栋</view>
+      <input placeholder="例如 3号楼" value="{{building}}" data-key="building" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="label">单元/门牌</view>
+      <input placeholder="例如 2单元 1801" value="{{unit}}" data-key="unit" bindinput="onInput" />
+    </view>
+    <button class="button-primary" loading="{{submitting}}" bindtap="submit">完成认证</button>
+  </view>
+</view>

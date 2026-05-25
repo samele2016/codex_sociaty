@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/publish/publish",
+    "pages/detail/detail",
+    "pages/messages/messages",
+    "pages/profile/profile",
+    "pages/verify/verify",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "navigationBarTitleText": "社区助手",
+    "navigationBarBackgroundColor": "#276749",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f6f7f3"
+  },
+  "tabBar": {
+    "color": "#6f756d",
+    "selectedColor": "#276749",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "广场"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发布"
+      },
+      {
+        "pagePath": "pages/messages/messages",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}
