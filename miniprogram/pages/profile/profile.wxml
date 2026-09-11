@@ -1,4 +1,4 @@
-<view class="page">
+<view class="page page-narrow">
   <view class="profile section">
     <image wx:if="{{user.avatarUrl}}" class="avatar" src="{{user.avatarUrl}}" mode="aspectFill" />
     <view wx:else class="avatar avatar-fallback">邻</view>
@@ -6,22 +6,42 @@
       <view class="title">{{user.nickName || '社区邻居'}}</view>
       <view class="muted">{{user.verified ? user.building + ' ' + user.unit : '未完成社区认证'}}</view>
     </view>
-    <view class="tag">{{user.role === 'admin' ? '管理员' : user.verified ? '已认证' : '待认证'}}</view>
+    <view class="tag">{{user.role === 'admin' || user.role === 'system_admin' ? '系统管理员' : user.role === 'board_admin' ? '板块管理员' : user.role === 'merchant' ? '商家' : user.verified ? '已认证业主' : user.verificationStatus === 'pending' ? '审核中' : '待认证'}}</view>
   </view>
 
-  <view class="section">
+  <view class="section menu-section">
     <view class="menu-item" bindtap="goVerify">
       <text>社区认证</text>
-      <text class="muted">邀请码/楼栋</text>
+      <text class="muted">{{user.verificationStatus === 'pending' ? '审核中' : '填写昵称和房号'}}</text>
     </view>
-    <view wx:if="{{user.role === 'admin'}}" class="menu-item" bindtap="goAdmin">
+    <view wx:if="{{user.role === 'admin' || user.role === 'system_admin' || user.role === 'board_admin' || (user.permissions && user.permissions.indexOf('owner_verification') > -1)}}" class="menu-item" bindtap="goAdmin">
       <text>管理后台</text>
       <text class="muted">审核与举报</text>
     </view>
+    <view wx:if="{{user.role !== 'merchant'}}" class="menu-item" bindtap="goMerchantApply">
+      <text>商家入驻申请</text>
+      <text class="muted">外部商家可独立申请</text>
+    </view>
+    <view wx:if="{{user.role === 'merchant'}}" class="menu-item" bindtap="goMerchantLeads">
+      <text>我的服务线索</text>
+      <text class="muted">查看已授权分配的装修咨询</text>
+    </view>
+    <view class="menu-item" bindtap="goPrivacy">
+      <text>隐私与账号</text>
+      <text class="muted">查看数据使用说明、提交更正或注销申请</text>
+    </view>
+    <view class="menu-item" bindtap="goNotifications">
+      <text>消息通知</text>
+      <text class="muted">查看认证、审核、评论和服务进展</text>
+    </view>
+    <view wx:if="{{user.role === 'admin' || user.role === 'system_admin'}}" class="menu-item" bindtap="goM1Admin">
+      <text>M1运营中心</text>
+      <text class="muted">交付资料、线索与广告</text>
+    </view>
   </view>
 
   <view class="section">
-    <view class="title small">社区公约</view>
+    <view class="title title-sm">社区公约</view>
     <view class="rule">真实发布，线下面交请自行确认物品和安全。</view>
     <view class="rule">商家广告和团购必须标明身份、价格和有效期。</view>
     <view class="rule">求助信息请及时标记已解决，避免重复打扰。</view>

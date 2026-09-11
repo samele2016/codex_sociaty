@@ -1,0 +1,13 @@
+.notifications-page { padding-bottom: calc(72rpx + env(safe-area-inset-bottom)); }
+.page-header { align-items: flex-start; }
+.read-all { flex: 0 0 auto; min-width: 132rpx; margin: 0; padding: 8rpx 0; color: #1e40af; font-size: 25rpx; line-height: 1.4; background: transparent; }
+.read-all::after { border: 0; }
+.notification-row { position: relative; display: flex; align-items: center; gap: 16rpx; min-height: 136rpx; padding: 22rpx 18rpx; border-bottom: 1rpx solid #e3ebf6; background: #ffffff; }
+.notification-row:first-of-type { border-top-left-radius: 16rpx; border-top-right-radius: 16rpx; }
+.notification-row:last-child { border-bottom: 0; border-bottom-left-radius: 16rpx; border-bottom-right-radius: 16rpx; }
+.notification-row.unread { background: #f7fbff; }
+.notification-dot { flex: 0 0 auto; width: 14rpx; height: 14rpx; border-radius: 50%; background: #2563eb; }
+.notification-copy { flex: 1; min-width: 0; }
+.notification-title { color: #10233f; font-size: 28rpx; font-weight: 700; line-height: 1.4; }
+.notification-content { margin: 6rpx 0; color: #475569; font-size: 26rpx; line-height: 1.45; }
+.notification-arrow { color: #94a3b8; font-size: 40rpx; line-height: 1; }

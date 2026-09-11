@@ -1,22 +1,39 @@
-<view class="page">
-  <view class="section">
-    <view class="title">社区认证</view>
-    <view class="muted">认证后可发布、评论和查看联系方式</view>
+<view class="custom-nav" style="padding-top: {{statusBarHeight}}px;">
+  <view class="custom-nav-row" style="height: {{navHeight}}px;">
+    <view class="custom-nav-back" bindtap="handleBack"><text>‹</text></view>
+    <text class="custom-nav-title">社区认证</text>
+  </view>
+</view>
+<view class="page page-narrow verify-page">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">社区准入</view>
+      <view class="title title-lg">业主认证申请</view>
+      <view class="muted">提交后由管理员核验，审核通过即可发帖、评论和查看联系方式</view>
+    </view>
   </view>
 
-  <view class="form">
+  <view class="form section">
+    <view class="field">
+      <view class="label">昵称</view>
+      <input placeholder="请输入社区内使用的昵称" value="{{nickName}}" data-key="nickName" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="label">房号</view>
+      <input maxlength="14" placeholder="例如 阅-1-101 或 朝-12-1201" value="{{houseNumber}}" data-key="houseNumber" bindinput="onInput" />
+      <view class="helper">必须包含“阅”或“朝”前缀，仅用于社区身份认证，不会在帖子中公开</view>
+    </view>
     <view class="field">
       <view class="label">邀请码</view>
-      <input placeholder="例如 A1-2026" value="{{code}}" data-key="code" bindinput="onInput" />
+      <input maxlength="40" placeholder="例如 YSF-2027" value="{{code}}" data-key="code" bindinput="onInput" />
+      <view class="helper">以系统管理员提供的实际邀请码为准</view>
     </view>
-    <view class="field">
-      <view class="label">楼栋</view>
-      <input placeholder="例如 3号楼" value="{{building}}" data-key="building" bindinput="onInput" />
+    <view class="privacy-consent">
+      <checkbox-group bindchange="onPrivacyChange">
+        <label class="privacy-check"><checkbox value="accepted" checked="{{privacyAccepted}}" /><text>我已阅读并同意隐私说明</text></label>
+      </checkbox-group>
+      <text class="privacy-link" bindtap="openPrivacy">查看隐私说明</text>
     </view>
-    <view class="field">
-      <view class="label">单元/门牌</view>
-      <input placeholder="例如 2单元 1801" value="{{unit}}" data-key="unit" bindinput="onInput" />
-    </view>
-    <button class="button-primary" loading="{{submitting}}" bindtap="submit">完成认证</button>
+    <button class="button-primary" loading="{{submitting}}" bindtap="submit">提交认证申请</button>
   </view>
 </view>

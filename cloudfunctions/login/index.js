@@ -11,8 +11,8 @@ exports.main = async () => {
 
   if (found.data.length) {
     const user = found.data[0];
-    await users.doc(user._id).update({ data: { updatedAt: now } });
-    return { user };
+    await users.doc(user._id).update({ data: { updatedAt: now, lastActiveAt: now } });
+    return { user: Object.assign({}, user, { lastActiveAt: now }) };
   }
 
   const user = {
@@ -20,12 +20,15 @@ exports.main = async () => {
     nickName: '社区邻居',
     avatarUrl: '',
     verified: false,
+    verificationStatus: 'unsubmitted',
     building: '',
     unit: '',
-    role: 'member',
+    role: 'owner',
+    merchantCategories: [],
     banned: false,
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
+    lastActiveAt: now
   };
   const created = await users.add({ data: user });
   return { user: Object.assign({ _id: created._id }, user) };

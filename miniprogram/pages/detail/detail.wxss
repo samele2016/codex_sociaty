@@ -1,82 +1,16 @@
-.post-head,
-.actions,
-.comment-box {
-  display: flex;
-  gap: 12rpx;
-  align-items: center;
-}
-
-.meta {
-  margin-top: 10rpx;
-  color: #7a8176;
-  font-size: 24rpx;
-}
-
-.content {
-  margin-top: 22rpx;
-  font-size: 30rpx;
-  line-height: 1.7;
-}
-
-.image-list {
-  margin-top: 18rpx;
-}
-
-.image-list image {
-  width: 100%;
-  margin-bottom: 12rpx;
-  border-radius: 10rpx;
-}
-
-.fields {
-  margin-top: 18rpx;
-  border-top: 1rpx solid #eef0ea;
-}
-
-.field-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 16rpx 0;
-  border-bottom: 1rpx solid #eef0ea;
-  font-size: 26rpx;
-}
-
-.actions {
-  margin-top: 24rpx;
-}
-
-.small {
-  font-size: 30rpx;
-  margin-bottom: 16rpx;
-}
-
-.contact {
-  padding: 18rpx;
-  background: #eef4e9;
-  border-radius: 10rpx;
-  color: #276749;
-}
-
-.comment {
-  padding: 18rpx 0;
-  border-bottom: 1rpx solid #eef0ea;
-}
-
-.comment-head {
-  color: #6f756d;
-  font-size: 24rpx;
-  margin-bottom: 8rpx;
-}
-
-.comment-box {
-  margin-top: 20rpx;
-}
-
-.comment-box input {
-  flex: 1;
-  height: 68rpx;
-  padding: 0 18rpx;
-  border: 1rpx solid #dfe4d8;
-  border-radius: 10rpx;
-  background: #fbfcf8;
-}
+.post-head, .actions, .comment-box { display: flex; gap: 8px; align-items: center; }
+.meta { margin-top: 8px; color: #7a8176; font-size: 13px; }
+.content { margin-top: 16px; color: #263247; font-size: 17px; line-height: 1.75; white-space: pre-wrap; }
+.image-list { margin-top: 14px; }
+.image-list image { width: 100%; margin-bottom: 10px; border-radius: 8px; }
+.fields { margin-top: 14px; border-top: 1px solid #eef0ea; }
+.field-item { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #eef0ea; font-size: 15px; }
+.actions { flex-wrap: wrap; margin-top: 18px; }
+.small { margin-bottom: 12px; font-size: 18px; }
+.commercial-tag { background: #fff0f0; color: #b42318; }
+.contact { padding: 14px; border-radius: 8px; background: #eaf7ef; color: #176845; font-size: 16px; }
+.comment { padding: 14px 0; border-bottom: 1px solid #eef0ea; line-height: 1.6; }
+.comment-head { margin-bottom: 6px; color: #6f756d; font-size: 13px; }
+.comment-box { margin-top: 16px; }
+.comment-box input { min-width: 0; min-height: 44px; height: 44px; flex: 1; padding: 0 12px; border: 1px solid #dfe4d8; border-radius: 8px; background: #fbfcf8; }
+.comment-box .button-inline { width: auto; min-width: 76px; flex: 0 0 auto; margin: 0; }

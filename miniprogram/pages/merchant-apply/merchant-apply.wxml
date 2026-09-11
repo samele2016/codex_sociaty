@@ -1,0 +1,23 @@
+<view class="page page-narrow merchant-apply-page">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">商业合作</view>
+      <view class="title title-lg">商家入驻申请</view>
+      <view class="muted">外部商家可独立申请，无需业主房号。系统管理员审核资料后指定可发布板块，所有商家内容仍需审核。</view>
+    </view>
+  </view>
+
+  <view class="section form">
+    <view class="field"><view class="label">商家名称</view><input placeholder="企业或个人服务名称" data-key="businessName" value="{{businessName}}" bindinput="onInput" /></view>
+    <view class="field"><view class="label">审核联系方式</view><input placeholder="手机号、微信或门店地址，仅供审核联系" data-key="contact" value="{{contact}}" bindinput="onInput" /></view>
+    <view class="field"><view class="label">服务类别</view><checkbox-group bindchange="onCategoryChange" class="checks"><label wx:for="{{choices}}" wx:key="key" class="check"><checkbox value="{{item.key}}" checked="{{selected.indexOf(item.key) > -1}}" /><text>{{item.label}}</text></label></checkbox-group></view>
+    <view class="field"><view class="label">服务介绍</view><textarea maxlength="1200" placeholder="说明服务经验、团队能力与服务承诺" data-key="description" value="{{description}}" bindinput="onInput"></textarea></view>
+    <view class="field"><view class="label">公开服务范围</view><input maxlength="200" placeholder="例如：阅仕府全社区，提供上门量房与方案沟通" data-key="serviceScope" value="{{serviceScope}}" bindinput="onInput" /></view>
+    <view class="field"><view class="label">公开报价说明</view><textarea maxlength="600" placeholder="例如：量房是否收费、报价包含范围、合同与售后说明。不得使用无法核验的最低价承诺。" data-key="priceNotes" value="{{priceNotes}}" bindinput="onInput"></textarea></view>
+    <view class="field"><view class="label">公开案例图（可选）</view><view class="case-grid"><view wx:for="{{caseImages}}" wx:key="*this" class="case-thumb"><image src="{{item}}" mode="aspectFill" /><view class="remove-case" data-index="{{index}}" bindtap="removeCaseImage">×</view></view><view wx:if="{{caseImages.length < 6}}" class="add-case" bindtap="chooseCaseImages">+</view></view><view class="helper">最多 6 张，仅上传你有权公开展示的案例图片。</view></view>
+    <view class="field"><view class="label">资质材料（仅供审核，可选）</view><button class="button-secondary upload-button" bindtap="chooseQualificationFiles">选择资质文件</button><view class="helper">支持图片、PDF 等文件，最多 6 份；不会在合作商家目录公开。</view></view>
+    <button class="button-primary" loading="{{submitting}}" bindtap="submit">提交入驻申请</button>
+  </view>
+
+  <view class="section" wx:if="{{applications.length}}"><view class="title title-sm">申请记录</view><view wx:for="{{applications}}" wx:key="_id" class="application-row"><view class="request-title">{{item.businessName}}</view><text class="tag">{{item.status === 'pending' ? '审核中' : item.status === 'approved' ? '已通过' : '已驳回'}}</text></view></view>
+</view>

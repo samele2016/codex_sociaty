@@ -1,0 +1,56 @@
+<view class="page page-narrow">
+  <view class="back-link" bindtap="goVerify">
+    <text class="muted">未认证？先完成业主认证</text>
+  </view>
+
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">装修服务</view>
+      <view class="title title-lg">提交装修需求</view>
+      <view class="muted">需求会进入社区线索台账，只有你主动授权后才会提供联系方式。</view>
+    </view>
+  </view>
+
+  <view class="section form">
+    <view class="field">
+      <view class="label">户型</view>
+      <input placeholder="例如 89㎡三室两厅" data-key="houseType" value="{{houseType}}" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="label">预算区间</view>
+      <input placeholder="例如 15-20 万" data-key="budget" value="{{budget}}" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="label">计划开工时间</view>
+      <input placeholder="例如 2027年4月" data-key="startDate" value="{{startDate}}" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view class="label">需求描述</view>
+      <textarea placeholder="请描述风格、施工范围、设计或材料需求" data-key="demand" value="{{demand}}" bindinput="onInput"></textarea>
+    </view>
+    <view class="field">
+      <view class="label">联系方式（可选）</view>
+      <input placeholder="手机号或微信号" data-key="contact" value="{{contact}}" bindinput="onInput" />
+    </view>
+    <label class="consent">
+      <checkbox value="contact" checked="{{contactAuthorized}}" bindchange="onConsentChange" />
+      <text>我同意社区在匹配装修服务时查看并使用以上联系方式</text>
+    </label>
+    <button class="button-primary" loading="{{submitting}}" bindtap="submit">提交装修需求</button>
+  </view>
+
+  <view class="section request-section" wx:if="{{requests.length}}">
+    <view class="title title-sm">我的需求</view>
+    <view wx:for="{{requests}}" wx:key="_id" class="request-row">
+      <view class="request-content">
+        <view class="request-title">{{item.houseType || '未填写户型'}} · {{item.budget || '预算待定'}}</view>
+        <view class="muted request-demand">{{item.demand}}</view>
+        <view class="request-meta">
+          <text class="tag">{{item.status === 'new' ? '待匹配' : item.status === 'assigned' ? '已分配' : item.status === 'contacted' ? '已联系' : '已完成'}}</text>
+          <text class="authorization-state">{{item.contactAuthorized ? '已授权联系方式' : '未授权联系方式'}}</text>
+        </view>
+      </view>
+      <button wx:if="{{item.contactAuthorized}}" class="button-text danger-action" data-id="{{item._id}}" bindtap="revokeContact">撤回授权</button>
+    </view>
+  </view>
+</view>

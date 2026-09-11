@@ -1,11 +1,18 @@
-<view class="page" wx:if="{{post}}">
+<view class="page page-narrow" wx:if="{{post}}">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">帖子详情</view>
+      <view class="title title-lg">{{post.title}}</view>
+      <view class="muted">{{post.authorName || '邻居'}} · {{post.createdAtText}}</view>
+    </view>
+  </view>
+
   <view class="section">
     <view class="post-head">
       <view class="tag">{{post.categoryLabel}}</view>
-      <view wx:if="{{post.status !== 'published'}}" class="status-warn">{{post.statusText}}</view>
+      <view wx:if="{{post.commercial}}" class="tag commercial-tag">商家推广</view>
+      <view wx:if="{{post.status !== 'published'}}" class="tag tag-warm">{{post.statusText}}</view>
     </view>
-    <view class="title">{{post.title}}</view>
-    <view class="meta">{{post.authorName || '邻居'}} · {{post.createdAtText}}</view>
     <view class="content">{{post.content}}</view>
     <view wx:if="{{post.images.length}}" class="image-list">
       <image wx:for="{{post.images}}" wx:key="*this" src="{{item}}" mode="widthFix" />
@@ -24,13 +31,13 @@
   </view>
 
   <view class="section">
-    <view class="title small">联系方式</view>
+    <view class="title title-sm">联系方式</view>
     <view wx:if="{{post.contact}}" class="contact">{{post.contact}}</view>
     <button wx:else class="button-secondary" bindtap="showContact">认证后查看联系方式</button>
   </view>
 
   <view class="section">
-    <view class="title small">评论</view>
+    <view class="title title-sm">评论</view>
     <view wx:for="{{comments}}" wx:key="_id" class="comment">
       <view class="comment-head">{{item.authorName || '邻居'}}</view>
       <view>{{item.content}}</view>
@@ -38,7 +45,7 @@
     <view wx:if="{{comments.length === 0}}" class="muted">还没有评论</view>
     <view class="comment-box">
       <input placeholder="写下你的回复" value="{{comment}}" bindinput="onCommentInput" />
-      <button size="mini" class="button-primary" bindtap="submitComment">发送</button>
+      <button size="mini" class="button-primary button-inline" bindtap="submitComment">发送</button>
     </view>
   </view>
 </view>

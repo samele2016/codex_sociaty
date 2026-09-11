@@ -1,0 +1,6 @@
+<view class="page page-narrow inspection-page">
+  <view class="page-header"><view><view class="eyebrow">交付准备</view><view class="title title-lg">验房清单</view><view class="muted">完成项仅保存在当前设备。发现问题时请拍照、记录位置并向开发商或物业确认整改时限。</view></view></view>
+  <view class="progress-card"><view><view class="progress-value">{{percent}}%</view><view class="muted">已核对 {{checkedCount}} / {{total}} 项</view></view><view class="progress-track"><view class="progress-fill" style="width: {{percent}}%;"></view></view></view>
+  <view wx:for="{{groups}}" wx:key="title" class="section checklist-group"><view class="title title-sm">{{item.title}}</view><view wx:for="{{item.items}}" wx:for-item="check" wx:for-index="itemIndex" wx:key="key" class="check-row" data-group="{{index}}" data-item="{{itemIndex}}" bindtap="toggleItem"><view class="check-box {{check.checked ? 'checked' : ''}}"></view><view class="check-label">{{check.label}}</view></view></view>
+  <button class="button-secondary reset-button" bindtap="reset">清空本机进度</button>
+</view>

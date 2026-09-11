@@ -1,0 +1,6 @@
+.budget-page { padding-bottom: calc(72rpx + env(safe-area-inset-bottom)); }
+.result-card { margin-top: 20rpx; padding: 28rpx; border: 1rpx solid #bfdbfe; border-radius: 16rpx; background: #ffffff; }
+.result-total { margin: 12rpx 0; color: #1e40af; font-size: 40rpx; font-weight: 800; line-height: 1.25; }
+.result-lines { margin: 24rpx 0; border-top: 1rpx solid #e9eff8; }
+.result-lines view { display: flex; justify-content: space-between; gap: 20rpx; padding: 18rpx 0; border-bottom: 1rpx solid #e9eff8; color: #475569; font-size: 26rpx; line-height: 1.45; }
+.result-lines text:last-child { color: #10233f; text-align: right; }

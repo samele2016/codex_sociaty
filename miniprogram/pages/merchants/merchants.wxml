@@ -1,0 +1,15 @@
+<view class="page page-narrow merchants-page">
+  <view class="page-header"><view><view class="eyebrow">装修服务季</view><view class="title title-lg">合作商家</view><view class="muted">以下为已提交资料并经社区审核的公开服务介绍。签约前请自行核验资质、报价、合同和售后责任。</view></view></view>
+  <view wx:if="{{loading}}" class="empty">正在加载商家资料...</view>
+  <view wx:elif="{{merchants.length === 0}}" class="empty">首批合作商家正在审核中。你可以先使用预算工具和装修需求表做准备。</view>
+  <view wx:for="{{merchants}}" wx:key="id" class="section merchant-card">
+    <view class="merchant-title">{{item.businessName}}</view>
+    <view class="merchant-tags"><text wx:for="{{item.categories}}" wx:key="*this" class="tag">{{item}}</text><text class="tag verified-tag">已审核</text></view>
+    <view class="merchant-desc">{{item.description}}</view>
+    <view class="merchant-block"><view class="merchant-label">服务范围</view><view class="merchant-copy">{{item.serviceScope || '以商家实际服务范围为准'}}</view></view>
+    <view class="merchant-block"><view class="merchant-label">报价说明</view><view class="merchant-copy">{{item.priceNotes || '请在签约前向商家索取书面报价与服务约定。'}}</view></view>
+    <view wx:if="{{item.caseImages.length}}" class="case-gallery"><image wx:for="{{item.caseImages}}" wx:key="*this" src="{{item}}" mode="aspectFill" /></view>
+    <view class="merchant-note">商家联系方式只会在你明确授权装修咨询后，由社区按规则匹配。</view>
+  </view>
+  <view class="action-grid"><button class="button-secondary" bindtap="apply">申请商家入驻</button><button class="button-primary" bindtap="openRenovation">提交装修咨询</button></view>
+</view>

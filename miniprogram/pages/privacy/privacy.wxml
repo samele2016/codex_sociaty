@@ -1,0 +1,28 @@
+<view class="page page-narrow privacy-page">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">隐私与账号</view>
+      <view class="title title-lg">你的信息如何被使用</view>
+      <view class="muted">本小程序服务于阅仕府社区交付、装修和邻里服务，不出售业主名单，也不会直接向商家提供房号、联系方式或行为数据。</view>
+    </view>
+  </view>
+
+  <view class="section policy-card">
+    <view class="title title-sm">我们收集的必要信息</view>
+    <view class="policy-row"><text>账号与昵称</text><text>用于登录与社区展示</text></view>
+    <view class="policy-row"><text>房号与邀请码</text><text>仅用于认证，不在帖子公开</text></view>
+    <view class="policy-row"><text>联系方式</text><text>仅在你主动展示或授权后使用</text></view>
+    <view class="policy-row"><text>内容与操作记录</text><text>用于内容治理、安全追溯和服务统计</text></view>
+    <view class="policy-row"><text>广告曝光与点击</text><text>按日去重统计，不向商家提供你的身份</text></view>
+  </view>
+
+  <view class="section">
+    <view class="title title-sm">提交账号与隐私申请</view>
+    <view class="field"><view class="label">申请类型</view><picker mode="selector" range="{{requestTypes}}" range-key="label" value="{{typeIndex}}" bindchange="onTypeChange"><view class="picker">{{requestTypes[typeIndex].label}}</view></picker></view>
+    <view class="field"><view class="label">申请说明</view><textarea maxlength="800" placeholder="请说明需要更正、注销或投诉的具体事项。请勿填写身份证号、银行卡号等敏感信息。" value="{{content}}" bindinput="onContentInput"></textarea></view>
+    <button class="button-primary" loading="{{submitting}}" bindtap="submit">提交申请</button>
+  </view>
+
+  <view class="section" wx:if="{{requests.length}}"><view class="title title-sm">我的申请记录</view><view wx:for="{{requests}}" wx:key="_id" class="request-row"><view><view class="request-title">{{item.typeText}}</view><view class="muted">{{item.content}}</view></view><text class="tag">{{item.statusText}}</text></view></view>
+  <view class="privacy-note">账号注销和数据删除申请会由运营人员核验后处理；为履行法律义务或处理纠纷所必需的记录，可能在法定期限内留存。</view>
+</view>

@@ -11,6 +11,7 @@ const statusText = {
   solved: '已解决',
   expired: '已过期'
 };
+const publicStatuses = ['published', 'solved', 'expired'];
 
 function formatDate(value) {
   if (!value) return '';
@@ -23,6 +24,27 @@ async function getUser(openid) {
   return res.data[0] || null;
 }
 
+function isSystemAdmin(user) {
+  return user && ['admin', 'system_admin'].includes(user.role) && !user.banned;
+}
+
+function canManagePost(user, post) {
+  return isSystemAdmin(user) || Boolean(
+    user && !user.banned && user.role === 'board_admin' && (user.managedCategories || []).includes(post.category)
+  );
+}
+
+function publicComment(comment) {
+  return {
+    _id: comment._id,
+    postId: comment.postId,
+    authorName: comment.authorName || '社区邻居',
+    content: comment.content,
+    parentId: comment.parentId || '',
+    createdAt: comment.createdAt
+  };
+}
+
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext();
   const id = event.id;
@@ -30,9 +52,9 @@ exports.main = async (event) => {
   const post = postRes.data;
   const viewer = await getUser(OPENID);
   const isAuthor = post._openid === OPENID;
-  const isAdmin = viewer && viewer.role === 'admin';
+  const canManage = canManagePost(viewer, post);
 
-  if (post.status !== 'published' && !isAuthor && !isAdmin) {
+  if (!publicStatuses.includes(post.status) && !isAuthor && !canManage) {
     throw new Error('帖子不可见');
   }
 
@@ -58,13 +80,28 @@ exports.main = async (event) => {
 
   return {
     post: {
-      ...post,
+      _id: post._id,
+      authorName: post.authorName || '社区邻居',
+      authorType: post.authorType === 'merchant' ? 'merchant' : 'owner',
+      commercial: Boolean(post.commercial),
+      category: post.category,
+      categoryLabel: post.categoryLabel,
+      title: post.title,
+      content: post.content,
       contact: canViewContact ? post.contact : '',
       images: post.images || [],
       fieldPairs: Object.keys(post.fields || {}).map((key) => ({ key, value: post.fields[key] })),
+      status: post.status,
       statusText: statusText[post.status] || post.status,
-      createdAtText: formatDate(post.createdAt)
+      createdAtText: formatDate(post.createdAt),
+      pinned: Boolean(post.pinned),
+      featured: Boolean(post.featured),
+      solved: Boolean(post.solved),
+      viewCount: Number(post.viewCount || 0),
+      likeCount: Number(post.likeCount || 0),
+      favoriteCount: Number(post.favoriteCount || 0),
+      commentCount: Number(post.commentCount || 0)
     },
-    comments: commentRes.data
+    comments: commentRes.data.map(publicComment)
   };
 };

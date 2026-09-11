@@ -1,0 +1,16 @@
+.back-link { min-height: 62rpx; display: flex; align-items: center; }
+.form { padding: 26rpx; }
+.field { margin-bottom: 24rpx; }
+.label { margin-bottom: 10rpx; color: #243b5a; font-size: 28rpx; font-weight: 700; }
+textarea { min-height: 190rpx; }
+.consent { display: flex; align-items: flex-start; gap: 8rpx; margin-bottom: 26rpx; color: #64748b; font-size: 26rpx; line-height: 1.5; }
+.request-section { padding-bottom: 8rpx; }
+.request-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16rpx; padding: 22rpx 0; border-bottom: 1rpx solid #eef2f7; }
+.request-row:last-child { border-bottom: 0; }
+.request-content { flex: 1; min-width: 0; }
+.request-title { color: #10233f; font-size: 28rpx; font-weight: 700; line-height: 1.4; }
+.request-demand { margin-top: 6rpx; font-size: 25rpx; line-height: 1.5; word-break: break-all; }
+.request-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12rpx; margin-top: 14rpx; }
+.authorization-state { color: #64748b; font-size: 23rpx; }
+.danger-action { flex: 0 0 auto; min-width: 132rpx; margin: 0; padding: 8rpx 0; color: #b42318; font-size: 24rpx; line-height: 1.4; background: transparent; }
+.danger-action::after { border: 0; }

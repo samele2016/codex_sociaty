@@ -21,8 +21,19 @@ const postStatusText = {
 
 const reviewRequiredCategories = ['ad', 'groupbuy'];
 
+const deliveryDate = '2027-04-01';
+
+const renovationStages = [
+  { key: 'before', label: '交付前' },
+  { key: 'design', label: '设计阶段' },
+  { key: 'construction', label: '施工阶段' },
+  { key: 'soft', label: '软装阶段' }
+];
+
 module.exports = {
   categories,
   postStatusText,
-  reviewRequiredCategories
+  reviewRequiredCategories,
+  deliveryDate,
+  renovationStages
 };

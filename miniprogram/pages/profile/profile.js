@@ -8,6 +8,8 @@ Page({
   },
 
   onShow() {
+    const tabBar = this.getTabBar && this.getTabBar();
+    if (tabBar) tabBar.setData({ selected: 2 });
     this.refresh();
   },
 
@@ -28,5 +30,25 @@ Page({
 
   goAdmin() {
     wx.navigateTo({ url: '/pages/admin/admin' });
+  },
+
+  goM1Admin() {
+    wx.navigateTo({ url: '/pages/admin-m1/admin-m1' });
+  },
+
+  goMerchantApply() {
+    wx.navigateTo({ url: '/pages/merchant-apply/merchant-apply' });
+  },
+
+  goMerchantLeads() {
+    wx.navigateTo({ url: '/pages/merchant-leads/merchant-leads' });
+  },
+
+  goPrivacy() {
+    wx.navigateTo({ url: '/pages/privacy/privacy' });
+  },
+
+  goNotifications() {
+    wx.navigateTo({ url: '/pages/notifications/notifications' });
   }
 });

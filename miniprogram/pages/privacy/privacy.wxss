@@ -1,0 +1,5 @@
+.privacy-page { padding-bottom: calc(72rpx + env(safe-area-inset-bottom)); }
+.policy-card { padding-bottom: 4rpx; }
+.policy-row { display: flex; justify-content: space-between; gap: 28rpx; padding: 20rpx 0; border-top: 1rpx solid #e9eff8; color: #10233f; font-size: 27rpx; line-height: 1.45; }
+.policy-row text:last-child { max-width: 52%; color: #64748b; font-size: 25rpx; text-align: right; }
+.privacy-note { padding: 0 10rpx; color: #64748b; font-size: 24rpx; line-height: 1.6; }

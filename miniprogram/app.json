@@ -3,38 +3,47 @@
     "pages/index/index",
     "pages/publish/publish",
     "pages/detail/detail",
+    "pages/channel/channel",
+    "pages/delivery/delivery",
+    "pages/renovation-request/renovation-request",
+    "pages/merchant-leads/merchant-leads",
+    "pages/merchant-apply/merchant-apply",
+    "pages/inspection/inspection",
+    "pages/budget/budget",
+    "pages/privacy/privacy",
+    "pages/notifications/notifications",
+    "pages/topics/topics",
+    "pages/merchants/merchants",
     "pages/messages/messages",
     "pages/profile/profile",
     "pages/verify/verify",
-    "pages/admin/admin"
+    "pages/admin/admin",
+    "pages/admin-m1/admin-m1"
   ],
   "window": {
-    "navigationBarTitleText": "社区助手",
-    "navigationBarBackgroundColor": "#276749",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#f6f7f3"
+    "navigationBarTitleText": "阅仕府微社区",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f8fb"
   },
   "tabBar": {
-    "color": "#6f756d",
-    "selectedColor": "#276749",
+    "custom": true,
+    "color": "#9aa0aa",
+    "selectedColor": "#1e86ff",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "广场"
-      },
-      {
-        "pagePath": "pages/publish/publish",
-        "text": "发布"
+        "text": "首页"
       },
       {
         "pagePath": "pages/messages/messages",
-        "text": "消息"
+        "text": "全部应用"
       },
       {
         "pagePath": "pages/profile/profile",
-        "text": "我的"
+        "text": "个人中心"
       }
     ]
   },

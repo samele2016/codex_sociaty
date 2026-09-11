@@ -1,49 +1,25 @@
-<view class="page">
-  <view class="hero">
-    <view>
-      <view class="title">邻里广场</view>
-      <view class="muted">闲置、求助、搭子、装修经验和社区团购</view>
-    </view>
-    <button class="post-button" size="mini" bindtap="onSortTap" data-sort="recommended">推荐</button>
+<view class="home-page">
+  <view class="home-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="brand-mark">阅</view>
+    <view class="brand-copy"><view class="brand-title">{{communityName}}</view><view class="brand-subtitle">交付与装修服务平台</view></view>
   </view>
-
-  <view class="search-row">
-    <input class="search-input" placeholder="搜索帖子、物品、技能" value="{{keyword}}" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearchConfirm" />
-    <button class="search-button" bindtap="onSearchConfirm">搜索</button>
+  <swiper class="hero-swiper" circular indicator-dots indicator-color="rgba(255,255,255,.45)" indicator-active-color="#ffffff">
+    <swiper-item><view class="flag-slide">
+      <view class="flag-star big-star"></view><view class="flag-star small-star star-one"></view><view class="flag-star small-star star-two"></view><view class="flag-star small-star star-three"></view><view class="flag-star small-star star-four"></view>
+      <view class="hero-copy"><view class="hero-kicker">阅仕府业主服务</view><view class="hero-title">一起准备新家的第一步</view><view class="hero-subtitle">计划交付 {{deliveryMonth}}</view></view>
+    </view></swiper-item>
+  </swiper>
+  <view class="delivery-summary" bindtap="openDelivery" hover-class="tap-muted" aria-label="查看交付中心">
+    <view class="summary-date"><text class="summary-month">2027.04</text><text>计划交付</text></view><view class="summary-divider"></view>
+    <view class="summary-main"><view class="summary-label">最新工程信息</view><view class="summary-title">{{latestUpdate ? latestUpdate.title : '交付资料正在持续整理'}}</view></view><view class="summary-arrow">›</view>
   </view>
-
-  <scroll-view class="category-scroll" scroll-x>
-    <view class="category-list">
-      <view wx:for="{{categories}}" wx:key="key" class="category {{activeCategory === item.key ? 'active' : ''}}" data-key="{{item.key}}" bindtap="onCategoryTap">
-        {{item.label}}
-      </view>
-    </view>
-  </scroll-view>
-
-  <view class="sort-row">
-    <view class="sort {{sort === 'latest' ? 'active' : ''}}" data-sort="latest" bindtap="onSortTap">最新</view>
-    <view class="sort {{sort === 'recommended' ? 'active' : ''}}" data-sort="recommended" bindtap="onSortTap">推荐</view>
+  <view class="home-section">
+    <view class="section-heading"><view><view class="section-title">常用服务</view><view class="section-caption">收房和装修的重要入口</view></view></view>
+    <view class="app-grid"><view wx:for="{{apps}}" wx:key="key" class="app-item" data-item="{{item}}" bindtap="onAppTap" hover-class="tap-muted" aria-label="{{item.label}}"><view class="app-symbol symbol-{{item.tone}}">{{item.symbol}}</view><view class="app-label">{{item.label}}</view></view></view>
   </view>
-
-  <view wx:if="{{posts.length === 0 && !loading}}" class="empty">还没有内容，认证后发布第一条邻里信息</view>
-
-  <view wx:for="{{posts}}" wx:key="_id" class="post-card" data-id="{{item._id}}" bindtap="openDetail">
-    <view class="post-head">
-      <view class="tag">{{item.categoryLabel}}</view>
-      <view wx:if="{{item.pinned}}" class="pin">置顶</view>
-      <view wx:if="{{item.featured}}" class="feature">精华</view>
-    </view>
-    <view class="post-title">{{item.title}}</view>
-    <view class="post-content">{{item.content}}</view>
-    <view wx:if="{{item.images.length}}" class="image-grid">
-      <image wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill" />
-    </view>
-    <view class="post-meta">
-      <text>{{item.authorName || '邻居'}}</text>
-      <text>{{item.likeCount || 0}}赞</text>
-      <text>{{item.commentCount || 0}}评</text>
-    </view>
+  <view class="notice-card" bindtap="openDelivery" hover-class="tap-muted"><view class="notice-badge">公告</view><view class="notice-text">{{latestUpdate ? '工程进度：' + latestUpdate.title : '社区信息请真实发布，商家服务请核验资质与合同'}}</view><view class="notice-arrow">›</view></view>
+  <view class="home-section recommendation-section">
+    <view class="section-heading"><view><view class="section-title">社区推荐</view><view class="section-caption">服务信息与商业合作均明确标识</view></view></view>
+    <swiper class="ad-swiper" autoplay circular interval="4200" duration="240" indicator-dots bindchange="onAdChange"><swiper-item wx:for="{{adBanners}}" wx:key="title" data-item="{{item}}" bindtap="onAdTap"><view class="ad-banner ad-{{item.tone}}"><view class="ad-label">{{item.label}}</view><view class="ad-title">{{item.title}}</view><view class="ad-desc">{{item.desc}}</view><view class="ad-action">查看详情 <text>›</text></view></view></swiper-item></swiper>
   </view>
-
-  <view wx:if="{{loading}}" class="empty">加载中...</view>
 </view>

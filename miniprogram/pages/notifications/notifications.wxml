@@ -1,0 +1,22 @@
+<view class="page page-narrow notifications-page">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">服务消息</view>
+      <view class="title title-lg">消息通知</view>
+      <view class="muted">认证、审核、评论和服务线索的进展会在这里留存。</view>
+    </view>
+    <button wx:if="{{unreadCount}}" class="button-text read-all" bindtap="markAllRead">全部已读</button>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">正在加载消息...</view>
+  <view wx:elif="{{notifications.length === 0}}" class="empty">暂时没有新的服务消息</view>
+  <view wx:for="{{notifications}}" wx:key="_id" class="notification-row {{item.read ? '' : 'unread'}}" data-item="{{item}}" bindtap="openNotification">
+    <view class="notification-dot" wx:if="{{!item.read}}"></view>
+    <view class="notification-copy">
+      <view class="notification-title">{{item.title}}</view>
+      <view class="notification-content">{{item.content}}</view>
+      <view class="muted">{{item.createdAtText || '最新通知'}}</view>
+    </view>
+    <view class="notification-arrow">›</view>
+  </view>
+</view>

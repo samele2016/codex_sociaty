@@ -1,0 +1,127 @@
+<view class="page admin-m1-page">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">M1 运营中心</view>
+      <view class="title title-lg">交付前增长台账</view>
+      <view class="muted">维护公开资料、合规处理申请、商家合作与装修服务线索</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">正在加载运营数据...</view>
+
+  <view class="panel-tabs">
+    <view class="panel-tab {{activePanel === 'overview' ? 'active' : ''}}" data-panel="overview" bindtap="switchPanel">总览</view>
+    <view class="panel-tab {{activePanel === 'content' ? 'active' : ''}}" data-panel="content" bindtap="switchPanel">内容</view>
+    <view class="panel-tab {{activePanel === 'leads' ? 'active' : ''}}" data-panel="leads" bindtap="switchPanel">线索</view>
+    <view class="panel-tab {{activePanel === 'finance' ? 'active' : ''}}" data-panel="finance" bindtap="switchPanel">财务</view>
+  </view>
+
+  <view wx:if="{{stats && activePanel === 'overview'}}" class="stats-grid">
+    <view class="stat-card"><view class="stat-value">{{stats.verifiedOwners}}</view><view class="stat-name">认证业主</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.monthlyActiveUsers}}</view><view class="stat-name">30 日活跃</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.renovationRequests}}</view><view class="stat-name">装修需求</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.effectiveLeads}}</view><view class="stat-name">有效线索</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.merchants}}</view><view class="stat-name">合作商家</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.activeAds}}</view><view class="stat-name">在投广告</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.adImpressions}}</view><view class="stat-name">广告曝光</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.adClicks}}</view><view class="stat-name">广告点击</view></view>
+    <view class="stat-card"><view class="stat-value">¥{{stats.revenue}}</view><view class="stat-name">已记录收入</view></view>
+    <view class="stat-card"><view class="stat-value">{{stats.activeAgreements}}</view><view class="stat-name">履约中合作</view></view>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'content'}}">
+    <view class="title title-sm">发布工程进度</view>
+    <view class="field"><input placeholder="进度标题" data-group="updateForm" data-key="title" value="{{updateForm.title}}" bindinput="onInput" /></view>
+    <view class="field"><textarea placeholder="例如：楼栋外立面施工完成 80%" data-group="updateForm" data-key="content" value="{{updateForm.content}}" bindinput="onInput"></textarea></view>
+    <view class="field"><input placeholder="信息来源（必填）" data-group="updateForm" data-key="source" value="{{updateForm.source}}" bindinput="onInput" /></view>
+    <view class="form-row"><input placeholder="适用范围" data-group="updateForm" data-key="coverage" value="{{updateForm.coverage}}" bindinput="onInput" /><input placeholder="版本" data-group="updateForm" data-key="version" value="{{updateForm.version}}" bindinput="onInput" /></view>
+    <button class="button-secondary upload-button" data-type="update" bindtap="chooseFiles">选择进度附件（{{updateForm.attachments.length}}）</button>
+    <button class="button-primary" data-type="update" bindtap="saveDelivery">保存工程进度</button>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'content'}}">
+    <view class="title title-sm">发布交付资料</view>
+    <view class="field"><input placeholder="资料名称" data-group="documentForm" data-key="title" value="{{documentForm.title}}" bindinput="onInput" /></view>
+    <view class="form-row"><input placeholder="资料类型" data-group="documentForm" data-key="type" value="{{documentForm.type}}" bindinput="onInput" /><input placeholder="楼栋/范围" data-group="documentForm" data-key="building" value="{{documentForm.building}}" bindinput="onInput" /></view>
+    <view class="form-row"><input placeholder="户型" data-group="documentForm" data-key="layout" value="{{documentForm.layout}}" bindinput="onInput" /><input placeholder="版本" data-group="documentForm" data-key="version" value="{{documentForm.version}}" bindinput="onInput" /></view>
+    <view class="field"><input placeholder="资料来源（必填）" data-group="documentForm" data-key="source" value="{{documentForm.source}}" bindinput="onInput" /></view>
+    <button class="button-secondary upload-button" data-type="document" bindtap="chooseFiles">选择资料文件（{{documentForm.fileIds.length}}）</button>
+    <button class="button-primary" data-type="document" bindtap="saveDelivery">保存交付资料</button>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'leads'}}">
+    <view class="title title-sm">商家入驻审核</view>
+    <view wx:if="{{applications.length === 0}}" class="muted">暂无待审核申请</view>
+    <view wx:for="{{applications}}" wx:key="_id" class="lead-card">
+      <view class="record-title">{{item.businessName}}</view>
+      <view class="muted">服务：{{item.categories}} · {{item.contact}}</view>
+      <view class="muted">{{item.description}}</view>
+      <view class="muted">公开范围：{{item.serviceScope || '未填写'}} · 资质 {{item.qualificationFiles.length || 0}} 份 · 案例 {{item.caseImages.length || 0}} 张</view>
+      <view class="field compact-field"><view class="label">允许发布的板块</view><checkbox-group bindchange="onMerchantBoardChange" data-id="{{item._id}}" class="compact-checks"><label wx:for="{{merchantBoardOptions}}" wx:for-item="board" wx:key="key" class="compact-check"><checkbox value="{{board.key}}" checked="{{item.selectedPostCategories.indexOf(board.key) > -1}}" /><text>{{board.label}}</text></label></checkbox-group></view>
+      <view class="row"><button size="mini" data-id="{{item._id}}" data-status="approved" bindtap="reviewMerchant">通过</button><button size="mini" data-id="{{item._id}}" data-status="rejected" bindtap="reviewMerchant">驳回</button></view>
+    </view>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'leads'}}">
+    <view class="title title-sm">装修需求线索</view>
+    <view wx:if="{{requests.length === 0}}" class="muted">暂无线索</view>
+    <view wx:for="{{requests}}" wx:key="_id" class="lead-card">
+      <view class="record-title">{{item.houseType || '户型待定'}} · {{item.budget || '预算待定'}}</view>
+      <view class="muted">{{item.demand}}</view>
+      <view class="muted">联系方式授权：{{item.contactAuthorized ? '已授权，可在分配前核验' : '未授权，不展示'}}</view>
+      <picker wx:if="{{item.merchantOptions.length}}" mode="selector" range="{{item.merchantOptions}}" range-key="businessName" data-id="{{item._id}}" bindchange="onMerchantPickerChange"><view class="picker-line">{{item.selectedMerchantName || '选择已授权商家'}}</view></picker>
+      <view class="row"><button size="mini" data-id="{{item._id}}" bindtap="assignLead">分配线索</button><button size="mini" data-id="{{item._id}}" data-status="contacted" bindtap="updateLead">标记已联系</button><button size="mini" data-id="{{item._id}}" data-status="closed" bindtap="updateLead">关闭线索</button></view>
+    </view>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'content'}}">
+    <view class="title title-sm">账号与隐私申请</view>
+    <view wx:if="{{privacyRequests.length === 0}}" class="muted">暂无申请记录</view>
+    <view wx:for="{{privacyRequests}}" wx:key="_id" class="lead-card">
+      <view class="record-title">{{item.typeText}} <text class="tag">{{item.statusText}}</text></view>
+      <view class="muted">{{item.ownerName}}{{item.ownerHouseNumber ? ' · ' + item.ownerHouseNumber : ''}}</view>
+      <view class="privacy-content">{{item.content}}</view>
+      <view wx:if="{{item.handlerNote}}" class="muted">处理说明：{{item.handlerNote}}</view>
+      <view wx:if="{{item.status === 'pending'}}" class="row"><button size="mini" data-id="{{item._id}}" data-status="resolved" bindtap="resolvePrivacy">标记已处理</button><button size="mini" data-id="{{item._id}}" data-status="rejected" bindtap="resolvePrivacy">回复暂不受理</button></view>
+    </view>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'leads'}}">
+    <view class="title title-sm">首页广告位</view>
+    <picker wx:if="{{merchants.length}}" mode="selector" range="{{merchants}}" range-key="businessName" bindchange="onAdMerchantChange"><view class="picker-line">{{adForm.merchantName || '选择已授权合作商家'}}</view></picker>
+    <view wx:else class="muted">暂无已授权商家，完成商家审核后才可发布广告位。</view>
+    <view class="field"><input placeholder="广告标题" data-group="adForm" data-key="title" value="{{adForm.title}}" bindinput="onInput" /></view>
+    <view class="field"><textarea placeholder="广告内容与服务承诺" data-group="adForm" data-key="content" value="{{adForm.content}}" bindinput="onInput"></textarea></view>
+    <view class="form-row"><input placeholder="开始日期" data-group="adForm" data-key="startAt" value="{{adForm.startAt}}" bindinput="onInput" /><input placeholder="结束日期" data-group="adForm" data-key="endAt" value="{{adForm.endAt}}" bindinput="onInput" /></view>
+    <button class="button-primary" disabled="{{!merchants.length}}" bindtap="saveAd">发布广告位</button>
+    <view wx:for="{{ads}}" wx:key="_id" class="record-row"><view><view class="record-title">广告 · {{item.title}}</view><view class="muted">{{item.merchantName || '合作商家'}} · {{item.endAt || '长期有效'}} · 曝光 {{item.impressionCount || 0}} · 点击 {{item.clickCount || 0}}</view></view><button size="mini" data-id="{{item._id}}" bindtap="removeAd">下架</button></view>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'finance'}}">
+    <view class="title title-sm">商家合作台账</view>
+    <view class="muted section-note">登记线下合同、服务期、收退款与规则，不在小程序内收款或处理交易售后。</view>
+    <picker wx:if="{{merchants.length}}" mode="selector" range="{{merchants}}" range-key="businessName" bindchange="onAgreementMerchantChange"><view class="picker-line">{{agreementForm.merchantName || '选择已授权商家'}}</view></picker>
+    <view wx:else class="muted">暂无已授权商家，完成商家审核后可建立合作记录。</view>
+    <view class="field"><input placeholder="合作项目，例如：首页广告包月" data-group="agreementForm" data-key="title" value="{{agreementForm.title}}" bindinput="onInput" /></view>
+    <view class="form-row"><input placeholder="服务类型" data-group="agreementForm" data-key="serviceType" value="{{agreementForm.serviceType}}" bindinput="onInput" /><input placeholder="合同/订单编号" data-group="agreementForm" data-key="contractNo" value="{{agreementForm.contractNo}}" bindinput="onInput" /></view>
+    <view class="form-row"><input placeholder="服务开始日 YYYY-MM-DD" data-group="agreementForm" data-key="serviceStart" value="{{agreementForm.serviceStart}}" bindinput="onInput" /><input placeholder="服务结束日 YYYY-MM-DD" data-group="agreementForm" data-key="serviceEnd" value="{{agreementForm.serviceEnd}}" bindinput="onInput" /></view>
+    <view class="form-row"><input type="digit" placeholder="合同金额（元）" data-group="agreementForm" data-key="amount" value="{{agreementForm.amount}}" bindinput="onInput" /><input type="digit" placeholder="实收金额（元）" data-group="agreementForm" data-key="paidAmount" value="{{agreementForm.paidAmount}}" bindinput="onInput" /></view>
+    <view class="form-row"><input type="digit" placeholder="退款金额（元）" data-group="agreementForm" data-key="refundAmount" value="{{agreementForm.refundAmount}}" bindinput="onInput" /><picker mode="selector" range="{{agreementStatuses}}" range-key="label" value="{{agreementStatusIndex}}" bindchange="onAgreementStatusChange"><view class="picker-line compact-picker">{{agreementStatusLabel}}</view></picker></view>
+    <view class="field"><textarea placeholder="退款规则（必填）" data-group="agreementForm" data-key="refundRule" value="{{agreementForm.refundRule}}" bindinput="onInput"></textarea></view>
+    <view class="field"><input placeholder="备注，例如：线下付款凭证编号" data-group="agreementForm" data-key="note" value="{{agreementForm.note}}" bindinput="onInput" /></view>
+    <button class="button-primary" bindtap="saveAgreement">{{agreementForm.id ? '更新合作记录' : '保存合作记录'}}</button>
+    <view wx:if="{{agreements.length === 0}}" class="muted empty-record">暂无合作记录</view>
+    <view wx:for="{{agreements}}" wx:key="_id" class="record-row agreement-row">
+      <view class="agreement-copy"><view class="record-title">{{item.title}} <text class="tag">{{item.status === 'active' ? '履约中' : item.status === 'completed' ? '已完成' : item.status === 'refunded' ? '已退款' : item.status === 'cancelled' ? '已取消' : '草稿'}}</text></view><view class="muted">{{item.merchantName}} · {{item.serviceType}} · {{item.contractNo}}</view><view class="muted">{{item.serviceStart || '未填开始日'}} 至 {{item.serviceEnd || '未填结束日'}} · 合同 ¥{{item.amount}} · 实收 ¥{{item.paidAmount}} · 退款 ¥{{item.refundAmount || 0}}</view><view class="muted agreement-rule">退款规则：{{item.refundRule}}</view></view>
+      <button size="mini" data-id="{{item._id}}" bindtap="editAgreement">编辑</button>
+    </view>
+  </view>
+
+  <view class="section" hidden="{{activePanel !== 'finance'}}">
+    <view class="title title-sm">收入台账</view>
+    <view class="muted section-note">仅记录线下已确认的广告位、商家套餐等收入，M1 不接入支付。</view>
+    <view class="form-row"><input type="digit" placeholder="金额（元）" data-group="revenueForm" data-key="amount" value="{{revenueForm.amount}}" bindinput="onInput" /><input placeholder="类型" data-group="revenueForm" data-key="type" value="{{revenueForm.type}}" bindinput="onInput" /></view>
+    <view class="field"><input placeholder="备注，例如：5 月首页广告位" data-group="revenueForm" data-key="note" value="{{revenueForm.note}}" bindinput="onInput" /></view>
+    <button class="button-primary" loading="{{revenueSubmitting}}" disabled="{{revenueSubmitting}}" bindtap="saveRevenue">{{revenueSubmitting ? '正在记账' : '记一笔收入'}}</button>
+  </view>
+</view>

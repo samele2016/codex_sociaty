@@ -1,6 +1,6 @@
 App({
   globalData: {
-    env: 'replace-with-your-cloud-env-id',
+    env: 'cloud1-d2g3tkgc73fb08aa8',
     user: null
   },
 

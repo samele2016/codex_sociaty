@@ -1,74 +1,96 @@
-const { categories } = require('../../utils/constants');
 const { call } = require('../../utils/api');
+
+function safeCommunityName(value) {
+  const normalized = String(value || '').trim().replace(/悦仕府/g, '阅仕府');
+  return !normalized || /[?？�]{2,}/.test(normalized) ? '阅仕府微社区' : normalized;
+}
 
 Page({
   data: {
-    categories,
-    activeCategory: 'all',
-    sort: 'latest',
-    posts: [],
-    loading: false,
-    hasMore: true,
-    page: 0,
-    keyword: ''
+    statusBarHeight: 20,
+    communityName: '阅仕府微社区',
+    deliveryMonth: '2027年4月',
+    apps: [
+      { key: 'delivery', label: '工程进度', symbol: '进', tone: 'blue', url: '/pages/delivery/delivery' },
+      { key: 'layouts', label: '户型资料', symbol: '户', tone: 'cyan', url: '/pages/delivery/delivery?tab=documents' },
+      { key: 'renovation', label: '装修交流', symbol: '装', tone: 'green', category: 'renovation' },
+      { key: 'inspection', label: '验房清单', symbol: '验', tone: 'orange', url: '/pages/inspection/inspection' },
+      { key: 'budget', label: '装修预算', symbol: '算', tone: 'violet', url: '/pages/budget/budget' },
+      { key: 'topics', label: '业主共议', symbol: '议', tone: 'red', url: '/pages/topics/topics' },
+      { key: 'service', label: '找装修服务', symbol: '服', tone: 'gold', url: '/pages/renovation-request/renovation-request' },
+      { key: 'all', label: '全部应用', symbol: '全', tone: 'gray', tab: '/pages/messages/messages' }
+    ],
+    latestUpdate: null,
+    adBanners: [
+      { title: '交付准备资料', desc: '工程进度、户型资料与验房清单', label: '社区服务', tone: 'service', url: '/pages/delivery/delivery' },
+      { title: '装修交流专区', desc: '和同户型邻居讨论预算、材料与施工', label: '业主交流', tone: 'community', url: '/pages/channel/channel?category=renovation' },
+      { title: '商家合作申请', desc: '提交服务资料，审核通过后参与社区合作', label: '商业合作', tone: 'business', url: '/pages/merchant-apply/merchant-apply' }
+    ]
   },
 
   onLoad() {
-    this.loadPosts(true);
+    const windowInfo = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync();
+    this.setData({ statusBarHeight: windowInfo.statusBarHeight || 20 });
+    this.loadHomeData();
+  },
+
+  onShow() {
+    const tabBar = this.getTabBar && this.getTabBar();
+    if (tabBar) tabBar.setData({ selected: 0 });
   },
 
   onPullDownRefresh() {
-    this.loadPosts(true).finally(() => wx.stopPullDownRefresh());
+    this.loadHomeData().finally(() => wx.stopPullDownRefresh());
   },
 
-  onReachBottom() {
-    if (this.data.hasMore && !this.data.loading) {
-      this.loadPosts(false);
-    }
-  },
-
-  async loadPosts(reset) {
-    const page = reset ? 0 : this.data.page;
-    this.setData({ loading: true });
+  async loadHomeData() {
     try {
-      const res = await call('listPosts', {
-        category: this.data.activeCategory,
-        sort: this.data.sort,
-        keyword: this.data.keyword,
-        page,
-        pageSize: 12
-      });
+      const [delivery, ads] = await Promise.all([
+        call('deliveryHub', { action: 'overview' }),
+        call('adManage', { action: 'list' })
+      ]);
+      const dynamicAds = (ads.ads || []).map((item) => ({
+        adId: item._id,
+        title: item.title,
+        desc: item.content,
+        label: `广告 · ${item.merchantName || '合作商家'}`,
+        tone: 'business',
+        url: '/pages/channel/channel?category=ad'
+      }));
       this.setData({
-        posts: reset ? res.posts : this.data.posts.concat(res.posts),
-        hasMore: res.hasMore,
-        page: page + 1
+        communityName: safeCommunityName(delivery.communityName),
+        latestUpdate: (delivery.updates || [])[0] || null,
+        adBanners: dynamicAds.length ? dynamicAds : this.data.adBanners
       });
+      if (dynamicAds[0]) this.trackAd(dynamicAds[0].adId, 'impression');
     } catch (error) {
-      wx.showToast({ title: '加载失败', icon: 'none' });
-    } finally {
-      this.setData({ loading: false });
+      // 首页保留静态入口，云端恢复后下拉即可刷新。
     }
   },
 
-  onCategoryTap(event) {
-    this.setData({ activeCategory: event.currentTarget.dataset.key });
-    this.loadPosts(true);
+  onAppTap(event) {
+    const item = event.currentTarget.dataset.item || {};
+    if (item.tab) return wx.switchTab({ url: item.tab });
+    if (item.url) return wx.navigateTo({ url: item.url });
+    if (item.category) return wx.navigateTo({ url: `/pages/channel/channel?category=${item.category}` });
   },
 
-  onSortTap(event) {
-    this.setData({ sort: event.currentTarget.dataset.sort });
-    this.loadPosts(true);
+  openDelivery() {
+    wx.navigateTo({ url: '/pages/delivery/delivery' });
   },
 
-  onSearchInput(event) {
-    this.setData({ keyword: event.detail.value });
+  onAdTap(event) {
+    const item = event.currentTarget.dataset.item || {};
+    if (item.adId) this.trackAd(item.adId, 'click');
+    if (item.url) wx.navigateTo({ url: item.url });
   },
 
-  onSearchConfirm() {
-    this.loadPosts(true);
+  onAdChange(event) {
+    const item = this.data.adBanners[event.detail.current];
+    if (item && item.adId) this.trackAd(item.adId, 'impression');
   },
 
-  openDetail(event) {
-    wx.navigateTo({ url: `/pages/detail/detail?id=${event.currentTarget.dataset.id}` });
+  trackAd(adId, eventType) {
+    call('adManage', { action: 'track', adId, eventType }).catch(() => {});
   }
 });

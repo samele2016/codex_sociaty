@@ -1,4 +1,4 @@
 {
-  "navigationBarTitleText": "邻里广场",
+  "navigationStyle": "custom",
   "enablePullDownRefresh": true
 }

@@ -1,0 +1,27 @@
+.delivery-page { padding-bottom: calc(54rpx + env(safe-area-inset-bottom)); }
+.back-link { display: flex; align-items: center; gap: 10rpx; min-height: 88rpx; padding: 0 8rpx; color: #1e40af; font-size: 27rpx; }
+.back-arrow { width: 56rpx; font-size: 40rpx; line-height: 1; text-align: center; }
+.delivery-hero { padding: 34rpx 30rpx; border-radius: 24rpx; color: #fff; background: linear-gradient(135deg, #123b73, #1e86ff); }
+.delivery-hero .eyebrow { color: #b9e0ff; }
+.hero-title { font-size: 42rpx; font-weight: 800; line-height: 1.25; }
+.hero-desc { margin-top: 18rpx; font-size: 26rpx; }
+.hero-date { margin-left: 8rpx; font-size: 32rpx; font-weight: 800; }
+.hero-note { margin-top: 12rpx; color: rgba(255,255,255,.82); font-size: 26rpx; line-height: 1.55; }
+.tabbar { display: flex; margin: 24rpx 0 18rpx; border-bottom: 1rpx solid #dbeafe; }
+.tab { position: relative; padding: 0 12rpx 18rpx; margin-right: 34rpx; color: #7b8491; font-size: 30rpx; font-weight: 700; }
+.tab.active { color: #1e40af; }
+.tab.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1rpx; height: 6rpx; border-radius: 4rpx; background: #1e86ff; }
+.content-card { margin-bottom: 18rpx; padding: 24rpx; border: 1rpx solid #e3ebf6; border-radius: 18rpx; background: #fff; }
+.card-top { display: flex; align-items: center; justify-content: space-between; }
+.card-title { margin-top: 16rpx; color: #10233f; font-size: 31rpx; font-weight: 800; line-height: 1.35; }
+.card-content { margin-top: 12rpx; color: #394b63; font-size: 27rpx; line-height: 1.65; white-space: pre-wrap; }
+.meta { margin-top: 10rpx; color: #7b8491; font-size: 26rpx; line-height: 1.55; }
+.tag-green { background: #ecfdf3; color: #15803d; }
+.file-row { display: inline-block; margin-top: 16rpx; padding: 12rpx 18rpx; border-radius: 12rpx; color: #1e40af; background: #eef6ff; font-size: 24rpx; }
+.delivery-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16rpx; margin-top: 24rpx; }
+.tool-card { display: flex; min-height: 152rpx; gap: 14rpx; padding: 20rpx; border: 1rpx solid #bfdbfe; border-radius: 16rpx; background: #ffffff; }
+.tool-card:active { opacity: .72; }
+.tool-index { flex: 0 0 auto; color: #ea580c; font-size: 24rpx; font-weight: 800; line-height: 1.2; }
+.tool-title { color: #10233f; font-size: 27rpx; font-weight: 750; }
+.tool-desc { margin-top: 8rpx; color: #64748b; font-size: 24rpx; line-height: 1.45; }
+.service-button { margin-top: 26rpx; }

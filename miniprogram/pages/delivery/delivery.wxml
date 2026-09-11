@@ -1,0 +1,39 @@
+<view class="page delivery-page">
+  <view class="back-link" bindtap="goBack"><text class="back-arrow">‹</text><text>返回首页</text></view>
+  <view class="delivery-hero">
+    <view class="eyebrow">交付前服务</view>
+    <view class="hero-title">{{communityName}}交付中心</view>
+    <view class="hero-desc">计划交付时间：<text class="hero-date">2027年4月</text></view>
+    <view class="hero-note">工程进度、户型资料和验房准备，统一在这里更新</view>
+  </view>
+  <view class="tabbar">
+    <view class="tab {{activeTab === 'updates' ? 'active' : ''}}" data-tab="updates" bindtap="switchTab">工程进度</view>
+    <view class="tab {{activeTab === 'documents' ? 'active' : ''}}" data-tab="documents" bindtap="switchTab">交付资料</view>
+  </view>
+  <view wx:if="{{loading}}" class="empty">正在加载资料...</view>
+  <block wx:if="{{!loading && activeTab === 'updates'}}">
+    <view wx:if="{{updates.length === 0}}" class="empty">工程进度还在整理中，管理员发布后会第一时间展示。</view>
+    <view wx:for="{{updates}}" wx:key="_id" class="content-card">
+      <view class="card-top"><text class="tag">{{item.sourceType}}</text><text class="muted">{{item.version}}</text></view>
+      <view class="card-title">{{item.title}}</view>
+      <view class="card-content">{{item.content}}</view>
+      <view class="meta">适用范围：{{item.coverage || item.buildings || '全社区'}}</view>
+      <view class="meta">来源：{{item.source}}</view>
+    </view>
+  </block>
+  <block wx:if="{{!loading && activeTab === 'documents'}}">
+    <view wx:if="{{documents.length === 0}}" class="empty">户型图、交付标准等资料会在确认来源后陆续上传。</view>
+    <view wx:for="{{documents}}" wx:key="_id" class="content-card">
+      <view class="card-top"><text class="tag tag-green">{{item.type}}</text><text class="muted">{{item.version}}</text></view>
+      <view class="card-title">{{item.title}}</view>
+      <view class="meta">楼栋：{{item.building}} · 户型：{{item.layout || '待补充'}}</view>
+      <view class="meta">适用范围：{{item.coverage || '全社区'}} · 来源：{{item.source}}</view>
+      <view wx:if="{{item.fileIds.length}}" class="file-row" wx:for="{{item.fileIds}}" wx:key="*this" data-file="{{item}}" bindtap="preview">查看资料</view>
+    </view>
+  </block>
+  <view class="delivery-tools">
+    <view class="tool-card" bindtap="openInspection"><view class="tool-index">01</view><view><view class="tool-title">验房清单</view><view class="tool-desc">按空间逐项核对，保存当前进度</view></view></view>
+    <view class="tool-card" bindtap="openBudget"><view class="tool-index">02</view><view><view class="tool-title">装修预算</view><view class="tool-desc">先做透明估算，再决定是否咨询商家</view></view></view>
+  </view>
+  <button class="button-primary service-button" bindtap="openRenovation">提交装修需求，获取服务匹配</button>
+</view>

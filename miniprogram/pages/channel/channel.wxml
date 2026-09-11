@@ -1,0 +1,37 @@
+<view class="page channel-page">
+  <view class="channel-topbar" bindtap="goBack">
+    <text class="back-arrow">‹</text>
+    <text>返回</text>
+  </view>
+
+  <view class="channel-header">
+    <view class="eyebrow">邻里频道</view>
+    <view class="title title-lg">{{categoryLabel}}</view>
+    <view class="muted">{{description}}</view>
+    <button class="button-primary channel-publish" bindtap="openPublish">发布到本频道</button>
+  </view>
+
+  <view class="channel-list">
+    <view wx:if="{{posts.length === 0 && !loading}}" class="empty channel-empty">
+      <view>本频道还没有内容</view>
+      <view class="empty-desc">成为第一个发布信息的邻居吧</view>
+      <button class="button-secondary empty-button" bindtap="openPublish">发布第一条</button>
+    </view>
+
+    <view wx:for="{{posts}}" wx:key="_id" class="post-card" data-id="{{item._id}}" bindtap="openDetail">
+      <view class="post-card-head">
+        <view class="post-labels">
+          <view class="post-category">{{item.categoryLabel}}</view>
+          <view wx:if="{{item.commercial}}" class="commercial-tag">商家推广</view>
+        </view>
+        <view class="muted">{{item.authorName || '社区邻居'}}</view>
+      </view>
+      <view class="post-title">{{item.title}}</view>
+      <view class="post-content">{{item.content}}</view>
+      <image wx:if="{{item.images && item.images.length}}" class="post-cover" src="{{item.images[0]}}" mode="aspectFill" />
+      <view class="post-meta">{{item.commentCount || 0}} 条评论 · {{item.viewCount || 0}} 次浏览</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-text">加载中...</view>
+</view>

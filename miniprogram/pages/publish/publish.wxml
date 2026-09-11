@@ -1,20 +1,25 @@
-<view class="page">
-  <view class="section">
-    <view class="title">发布邻里信息</view>
-    <view class="muted">广告和团购会先进入审核，其他分类通过安全检测后发布</view>
+<view class="page page-narrow">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">邻里发布</view>
+      <view class="title title-lg">发布邻里信息</view>
+      <view class="muted">广告和团购会先进入审核，其他分类通过安全检测后发布</view>
+    </view>
   </view>
 
-  <view class="form">
-    <view class="field">
-      <view class="label">分类</view>
-      <picker mode="selector" range="{{categories}}" range-key="label" value="{{categoryIndex}}" bindchange="onCategoryChange">
-        <view class="picker">{{categories[categoryIndex].label}}</view>
-      </picker>
-    </view>
+  <view class="form section">
+    <view class="form-grid">
+      <view class="field">
+        <view class="label">分类</view>
+        <picker mode="selector" range="{{categories}}" range-key="label" value="{{categoryIndex}}" bindchange="onCategoryChange">
+          <view class="picker">{{categories[categoryIndex].label}}</view>
+        </picker>
+      </view>
 
-    <view class="field">
-      <view class="label">标题</view>
-      <input maxlength="40" placeholder="一句话说明你要发布什么" value="{{title}}" data-key="title" bindinput="onInput" />
+      <view class="field">
+        <view class="label">标题</view>
+        <input maxlength="40" placeholder="一句话说明你要发布什么" value="{{title}}" data-key="title" bindinput="onInput" />
+      </view>
     </view>
 
     <view class="field">
@@ -29,9 +34,11 @@
 
     <view class="field">
       <view class="label">补充字段</view>
-      <input placeholder="价格/预算" data-key="price" bindinput="onFieldInput" />
-      <input placeholder="地点/自提点" data-key="place" bindinput="onFieldInput" />
-      <input placeholder="时间/截止时间" data-key="time" bindinput="onFieldInput" />
+      <view class="form-grid">
+        <input placeholder="价格/预算" data-key="price" bindinput="onFieldInput" />
+        <input placeholder="地点/自提点" data-key="place" bindinput="onFieldInput" />
+        <input placeholder="时间/截止时间" data-key="time" bindinput="onFieldInput" />
+      </view>
     </view>
 
     <view class="field">

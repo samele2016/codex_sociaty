@@ -14,12 +14,25 @@ Page({
     images: [],
     fields: {},
     fieldPairs: [],
+    returnUrl: '',
     submitting: false
   },
 
+  onLoad(options) {
+    const categoryIndex = publishCategories.findIndex((item) => item.key === options.category);
+    let returnUrl = '';
+    if (options.returnUrl) {
+      try { returnUrl = decodeURIComponent(options.returnUrl); } catch (error) { returnUrl = options.returnUrl; }
+    }
+    this.setData({ categoryIndex: categoryIndex >= 0 ? categoryIndex : 0, returnUrl });
+  },
+
   async onShow() {
-    const user = await app.ensureUser();
-    if (!requireVerified(user)) {
+    const user = await app.login();
+    if (!requireVerified(user, { returnUrl: this.data.returnUrl })) {
+      if (user && user.verificationStatus === 'pending') {
+        setTimeout(() => this.leaveAfterPublish(), 500);
+      }
       return;
     }
   },
@@ -62,8 +75,8 @@ Page({
   },
 
   async submit() {
-    const user = await app.ensureUser();
-    if (!requireVerified(user)) {
+    const user = await app.login();
+    if (!requireVerified(user, { returnUrl: this.data.returnUrl })) {
       return;
     }
     if (!this.data.title.trim() || !this.data.content.trim()) {
@@ -87,13 +100,28 @@ Page({
         title: res.status === 'pending' ? '已提交审核' : '发布成功',
         content: res.message,
         showCancel: false,
-        success: () => wx.switchTab({ url: '/pages/index/index' })
+        success: () => this.leaveAfterPublish()
       });
     } catch (error) {
       wx.showToast({ title: error.message || '发布失败', icon: 'none' });
     } finally {
       this.setData({ submitting: false });
     }
+  },
+
+  leaveAfterPublish() {
+    if (this.data.returnUrl) {
+      const targetPath = this.data.returnUrl.split('?')[0].replace(/^\//, '');
+      const pages = getCurrentPages();
+      const previous = pages[pages.length - 2];
+      if (previous && previous.route === targetPath) {
+        wx.navigateBack({ delta: 1 });
+        return;
+      }
+      wx.redirectTo({ url: this.data.returnUrl, fail: () => wx.switchTab({ url: '/pages/index/index' }) });
+      return;
+    }
+    wx.switchTab({ url: '/pages/index/index' });
   },
 
   async uploadImages() {

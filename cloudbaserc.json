@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "envId": "cloud1-d2g3tkgc73fb08aa8",
+  "functionRoot": "cloudfunctions",
+  "functions": [
+    { "name": "login", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "verifyInvite", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "createPost", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "listPosts", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "getPostDetail", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "createComment", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "toggleLikeFavorite", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "reportContent", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "adminModerate", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "deliveryHub", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "renovationLead", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "merchantApply", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "merchantDirectory", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "adManage", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "opsStats", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "accountService", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "communityTopics", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 },
+    { "name": "notificationService", "timeout": 10, "runtime": "Nodejs20.19", "handler": "index.main", "memorySize": 256 }
+  ]
+}

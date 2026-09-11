@@ -1,6 +1,30 @@
-<view class="page">
-  <view wx:for="{{messages}}" wx:key="title" class="section">
-    <view class="title small">{{item.title}}</view>
-    <view class="muted">{{item.content}}</view>
+<view class="page app-page">
+  <view class="page-heading">
+    <view>
+      <view class="page-title">全部应用</view>
+      <view class="page-subtitle">交付、装修和邻里服务都在这里</view>
+    </view>
+    <button class="publish-button" bindtap="openPublish">发布信息</button>
+  </view>
+
+  <view wx:for="{{sections}}" wx:key="title" class="app-section">
+    <view class="section-title">{{item.title}}</view>
+    <view class="app-list">
+      <view
+        wx:for="{{item.items}}"
+        wx:for-item="appItem"
+        wx:key="label"
+        class="app-item"
+        data-item="{{appItem}}"
+        bindtap="onAppTap"
+      >
+        <view class="app-symbol app-symbol--{{appItem.tone}}">{{appItem.symbol}}</view>
+        <view class="app-copy">
+          <view class="app-name">{{appItem.label}}</view>
+          <view class="app-desc">{{appItem.desc}}</view>
+        </view>
+        <view class="app-arrow">›</view>
+      </view>
+    </view>
   </view>
 </view>

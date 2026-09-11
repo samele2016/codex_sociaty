@@ -1,0 +1,25 @@
+<view class="page page-narrow merchant-leads-page">
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">商家工作台</view>
+      <view class="title title-lg">我的服务线索</view>
+      <view class="muted">仅展示社区分配给你的装修需求。业主未明确授权时，不会提供联系方式。</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">正在加载服务线索...</view>
+  <view wx:elif="{{leads.length === 0}}" class="empty">暂时没有分配给你的服务线索</view>
+  <view wx:for="{{leads}}" wx:key="id" class="section lead-card">
+    <view class="lead-heading"><view class="record-title">{{item.houseType || '户型待定'}} · {{item.budget || '预算待定'}}</view><text class="tag">{{item.statusText}}</text></view>
+    <view wx:if="{{item.startDate}}" class="muted">计划开工：{{item.startDate}}</view>
+    <view class="lead-demand">{{item.demand}}</view>
+    <view wx:if="{{item.contactAuthorized}}" class="contact-box">业主已授权联系：{{item.contact}}</view>
+    <view wx:else class="consent-note">业主未授权联系方式。请不要通过其他渠道尝试联系。</view>
+    <view wx:if="{{item.status === 'assigned' || item.status === 'accepted' || item.status === 'contacted'}}" class="row lead-actions">
+      <button wx:if="{{item.status === 'assigned'}}" size="mini" data-id="{{item.id}}" data-status="accepted" loading="{{updatingId === item.id}}" bindtap="updateStatus">接收线索</button>
+      <button wx:if="{{item.contactAuthorized && item.status !== 'contacted'}}" size="mini" data-id="{{item.id}}" data-status="contacted" loading="{{updatingId === item.id}}" bindtap="updateStatus">标记已联系</button>
+      <button wx:if="{{item.status === 'contacted'}}" size="mini" data-id="{{item.id}}" data-status="closed" loading="{{updatingId === item.id}}" bindtap="updateStatus">完成服务</button>
+      <button wx:if="{{item.status === 'assigned'}}" size="mini" data-id="{{item.id}}" data-status="declined" loading="{{updatingId === item.id}}" bindtap="updateStatus">退回线索</button>
+    </view>
+  </view>
+</view>

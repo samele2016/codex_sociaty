@@ -1,5 +1,5 @@
 {
-  "description": "社区邻里 BBS 微信小程序",
+  "description": "YueShiFu Mini Society",
   "packOptions": {
     "ignore": []
   },
@@ -18,8 +18,8 @@
   },
   "compileType": "miniprogram",
   "libVersion": "latest",
-  "appid": "touristappid",
-  "projectname": "community-helper",
+  "appid": "wxafefecceb1bcdd07",
+  "projectname": "YueShiFu_MiniSociety",
   "cloudfunctionRoot": "cloudfunctions/",
   "miniprogramRoot": "miniprogram/",
   "condition": {}

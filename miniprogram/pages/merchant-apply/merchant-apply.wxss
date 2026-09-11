@@ -1,0 +1,17 @@
+.form { padding: 26rpx; }
+.merchant-apply-page { padding-bottom: calc(72rpx + env(safe-area-inset-bottom)); }
+.field { margin-bottom: 24rpx; }
+.label { margin-bottom: 10rpx; color: #243b5a; font-size: 26rpx; font-weight: 700; }
+textarea { min-height: 190rpx; }
+.checks { display: flex; flex-wrap: wrap; gap: 12rpx 22rpx; }
+.check { display: flex; align-items: center; min-height: 62rpx; color: #394b63; font-size: 26rpx; }
+.helper { margin-top: 8rpx; color: #64748b; font-size: 25rpx; line-height: 1.55; }
+.upload-button { display: inline-flex; align-items: center; justify-content: center; min-height: 62rpx; line-height: 62rpx; }
+.case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12rpx; }
+.case-thumb, .add-case { position: relative; width: 100%; height: 168rpx; border-radius: 14rpx; overflow: hidden; background: #eef6ff; }
+.case-thumb image { width: 100%; height: 100%; }
+.add-case { display: flex; align-items: center; justify-content: center; color: #1e40af; border: 1rpx dashed #93c5fd; font-size: 52rpx; }
+.remove-case { position: absolute; top: 8rpx; right: 8rpx; width: 40rpx; height: 40rpx; border-radius: 20rpx; background: rgba(15, 23, 42, .65); color: #fff; text-align: center; line-height: 38rpx; font-size: 30rpx; }
+.application-row { display: flex; justify-content: space-between; padding: 18rpx 0; border-bottom: 1rpx solid #eef2f7; }
+.application-row:last-child { border-bottom: 0; }
+.request-title { font-size: 27rpx; font-weight: 700; }

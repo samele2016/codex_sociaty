@@ -24,6 +24,45 @@
   border-bottom: 1rpx solid #eef0ea;
 }
 
+.section-note {
+  margin: 8rpx 0 16rpx;
+}
+
+.merchant-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 84rpx;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #e7edf5;
+}
+
+.merchant-row-active {
+  color: #1e40af;
+}
+
+.merchant-editor {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: #f3f7fd;
+  border: 1rpx solid #bfdbfe;
+  border-radius: 8rpx;
+}
+
+.category-checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16rpx 12rpx;
+  margin: 18rpx 0;
+}
+
+.category-check {
+  display: flex;
+  align-items: center;
+  min-height: 64rpx;
+  gap: 8rpx;
+}
+
 .item-title {
   font-size: 28rpx;
   font-weight: 700;

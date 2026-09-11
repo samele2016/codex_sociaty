@@ -1,35 +1,102 @@
 <view class="page">
-  <view class="section">
-    <view class="title">管理后台</view>
-    <view class="stats" wx:if="{{stats}}">
-      <view>待审 {{stats.pending || 0}}</view>
-      <view>举报 {{stats.reports || 0}}</view>
-      <view>用户 {{stats.users || 0}}</view>
+  <view class="page-header">
+    <view>
+      <view class="eyebrow">运营管理</view>
+      <view class="title title-lg">管理后台</view>
+      <view class="muted">审核帖子、处理举报、维护社区秩序</view>
     </view>
   </view>
 
   <view class="section">
-    <view class="title small">待审核帖子</view>
-    <view wx:if="{{pendingPosts.length === 0}}" class="muted">暂无待审</view>
-    <view wx:for="{{pendingPosts}}" wx:key="_id" class="admin-item">
-      <view class="item-title">{{item.title}}</view>
-      <view class="muted">{{item.categoryLabel}} · {{item.content}}</view>
-      <view class="row">
-        <button size="mini" data-action="approvePost" data-id="{{item._id}}" bindtap="moderate">通过</button>
-        <button size="mini" data-action="removePost" data-id="{{item._id}}" bindtap="moderate">下架</button>
-        <button size="mini" data-action="featurePost" data-id="{{item._id}}" bindtap="moderate">精华</button>
-        <button size="mini" data-action="pinPost" data-id="{{item._id}}" bindtap="moderate">置顶</button>
+    <view class="stats" wx:if="{{stats}}">
+      <view class="stat-card">
+        <view class="stat-value">{{stats.pending || 0}}</view>
+        <view class="stat-name">待审核</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-value">{{stats.reports || 0}}</view>
+        <view class="stat-name">举报</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-value">{{stats.users || 0}}</view>
+        <view class="stat-name">用户</view>
       </view>
     </view>
   </view>
 
-  <view class="section">
-    <view class="title small">举报处理</view>
-    <view wx:if="{{reports.length === 0}}" class="muted">暂无举报</view>
-    <view wx:for="{{reports}}" wx:key="_id" class="admin-item">
-      <view class="item-title">{{item.reason}}</view>
-      <view class="muted">{{item.detail || '用户提交了举报'}}</view>
-      <button size="mini" data-id="{{item._id}}" data-target="{{item.targetId}}" bindtap="handleReport">标记处理</button>
+  <view class="admin-grid">
+    <view class="section" wx:if="{{canReviewOwners}}">
+      <view class="title title-sm">待认证业主</view>
+      <view class="muted section-note">认证通过后，用户才可发帖和评论</view>
+      <view wx:if="{{pendingUsers.length === 0}}" class="muted">暂无待认证申请</view>
+      <view wx:for="{{pendingUsers}}" wx:key="_id" class="admin-item">
+        <view class="item-title">{{item.nickName || '未命名用户'}}</view>
+        <view class="muted item-desc">房号：{{item.houseNumber}} · 申请中</view>
+        <view class="row">
+          <button size="mini" data-action="approveUser" data-id="{{item._id}}" bindtap="approveUser">通过认证</button>
+          <button size="mini" data-action="rejectUser" data-id="{{item._id}}" bindtap="approveUser">驳回</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{isSystemAdmin}}">
+      <view class="title title-sm">认证审核员</view>
+      <view class="muted section-note">委派后只能审核业主认证，不会获得商家、封禁或运营权限。</view>
+      <view wx:for="{{reviewers}}" wx:key="_id" class="merchant-row">
+        <view>
+          <view class="item-title">{{item.nickName || '未命名业主'}}</view>
+          <view class="muted item-desc">{{item.permissions && item.permissions.indexOf('owner_verification') > -1 ? '可审核业主认证' : '普通认证业主'}}</view>
+        </view>
+        <button size="mini" data-id="{{item._id}}" data-enabled="{{item.permissions && item.permissions.indexOf('owner_verification') > -1}}" bindtap="toggleOwnerReviewer">{{item.permissions && item.permissions.indexOf('owner_verification') > -1 ? '收回' : '委派'}}</button>
+      </view>
+    </view>
+
+    <view class="section merchant-panel" wx:if="{{isSystemAdmin}}">
+      <view class="title title-sm">商家发帖板块</view>
+      <view class="muted section-note">仅系统管理员可配置。商家只能在授权板块发布信息。</view>
+      <view wx:if="{{merchants.length === 0}}" class="muted">暂无商家账号</view>
+      <view wx:for="{{merchants}}" wx:key="_id" class="merchant-row {{selectedMerchant && selectedMerchant._id === item._id ? 'merchant-row-active' : ''}}" data-id="{{item._id}}" bindtap="selectMerchant">
+        <view>
+          <view class="item-title">{{item.nickName || '未命名商家'}}</view>
+          <view class="muted item-desc">商家 · 已授权 {{item.merchantCategories ? item.merchantCategories.length : 0}} 个板块</view>
+        </view>
+        <view class="muted">配置</view>
+      </view>
+      <view wx:if="{{selectedMerchant}}" class="merchant-editor">
+        <view class="label">为 {{selectedMerchant.nickName || '该商家'}} 选择可发帖板块</view>
+        <checkbox-group bindchange="onMerchantCategoryChange" class="category-checks">
+          <label wx:for="{{boardCategories}}" wx:key="key" class="category-check">
+            <checkbox value="{{item.key}}" checked="{{selectedCategories.indexOf(item.key) > -1}}" />
+            <text>{{item.label}}</text>
+          </label>
+        </checkbox-group>
+        <button class="button-primary" bindtap="saveMerchantCategories">保存板块权限</button>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="title title-sm">待审核帖子</view>
+      <view wx:if="{{pendingPosts.length === 0}}" class="muted">暂无待审</view>
+      <view wx:for="{{pendingPosts}}" wx:key="_id" class="admin-item">
+        <view class="item-title">{{item.title}}</view>
+        <view class="muted item-desc">{{item.categoryLabel}} · {{item.content}}</view>
+        <view class="row">
+          <button size="mini" data-action="approvePost" data-id="{{item._id}}" bindtap="moderate">通过</button>
+          <button size="mini" data-action="removePost" data-id="{{item._id}}" bindtap="moderate">下架</button>
+          <button size="mini" data-action="featurePost" data-id="{{item._id}}" bindtap="moderate">精华</button>
+          <button size="mini" data-action="pinPost" data-id="{{item._id}}" bindtap="moderate">置顶</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="title title-sm">举报处理</view>
+      <view wx:if="{{reports.length === 0}}" class="muted">暂无举报</view>
+      <view wx:for="{{reports}}" wx:key="_id" class="admin-item">
+        <view class="item-title">{{item.reason}}</view>
+        <view class="muted item-desc">{{item.detail || '用户提交了举报'}}</view>
+        <button size="mini" data-id="{{item._id}}" data-target="{{item.targetId}}" bindtap="handleReport">标记处理</button>
+      </view>
     </view>
   </view>
 </view>

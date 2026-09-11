@@ -10,6 +10,7 @@ async function getCurrentUser(openid) {
   const user = res.data[0];
   if (!user.verified) throw new Error('请先完成社区认证');
   if (user.banned) throw new Error('账号已被限制');
+  if (user.role === 'merchant') throw new Error('商家账号仅可在授权板块发帖');
   return user;
 }
 
@@ -26,12 +27,28 @@ async function checkText(openid, content) {
   }
 }
 
+async function notify(openid, title, content, route) {
+  if (!openid) return;
+  try {
+    await db.collection('notifications').add({ data: {
+      _openid: openid,
+      type: 'comment',
+      title,
+      content,
+      route,
+      read: false,
+      createdAt: db.serverDate()
+    } });
+  } catch (error) { console.error('comment notification failed', error); }
+}
+
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext();
   const user = await getCurrentUser(OPENID);
   const content = String(event.content || '').trim();
   if (!content) throw new Error('评论不能为空');
   if (content.length > 500) throw new Error('评论过长');
+  if (/1[3-9]\d{9}|\b\d{17}[\dXx]\b/.test(content)) throw new Error('评论中不能发布手机号或身份证号');
   await checkText(OPENID, content);
 
   const post = await db.collection('posts').doc(event.postId).get();
@@ -52,5 +69,8 @@ exports.main = async (event) => {
     }
   });
   await db.collection('posts').doc(event.postId).update({ data: { commentCount: _.inc(1) } });
+  if (post.data._openid && post.data._openid !== OPENID) {
+    await notify(post.data._openid, '你的帖子收到新评论', `“${String(post.data.title || '').slice(0, 24)}”有新的邻里互动。`, `/pages/detail/detail?id=${event.postId}`);
+  }
   return { id: res._id };
 };
