@@ -17,11 +17,11 @@
 .card-content { margin-top: 12rpx; color: #394b63; font-size: 27rpx; line-height: 1.65; white-space: pre-wrap; }
 .meta { margin-top: 10rpx; color: #7b8491; font-size: 26rpx; line-height: 1.55; }
 .tag-green { background: #ecfdf3; color: #15803d; }
-.file-row { display: inline-block; margin-top: 16rpx; padding: 12rpx 18rpx; border-radius: 12rpx; color: #1e40af; background: #eef6ff; font-size: 24rpx; }
+.file-row { display: inline-flex; min-height: 44px; align-items: center; margin-top: 16rpx; padding: 8px 12px; border-radius: 8px; color: #1e40af; background: #eef6ff; font-size: 14px; }
 .delivery-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16rpx; margin-top: 24rpx; }
 .tool-card { display: flex; min-height: 152rpx; gap: 14rpx; padding: 20rpx; border: 1rpx solid #bfdbfe; border-radius: 16rpx; background: #ffffff; }
 .tool-card:active { opacity: .72; }
-.tool-index { flex: 0 0 auto; color: #ea580c; font-size: 24rpx; font-weight: 800; line-height: 1.2; }
+.tool-index { flex: 0 0 auto; color: #ea580c; font-size: 14px; font-weight: 800; line-height: 1.2; }
 .tool-title { color: #10233f; font-size: 27rpx; font-weight: 750; }
-.tool-desc { margin-top: 8rpx; color: #64748b; font-size: 24rpx; line-height: 1.45; }
+.tool-desc { margin-top: 8rpx; color: #64748b; font-size: 14px; line-height: 1.45; }
 .service-button { margin-top: 26rpx; }

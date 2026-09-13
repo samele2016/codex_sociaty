@@ -1,9 +1,4 @@
 <view class="page channel-page">
-  <view class="channel-topbar" bindtap="goBack">
-    <text class="back-arrow">‹</text>
-    <text>返回</text>
-  </view>
-
   <view class="channel-header">
     <view class="eyebrow">邻里频道</view>
     <view class="title title-lg">{{categoryLabel}}</view>

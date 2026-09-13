@@ -32,7 +32,8 @@ Page({
     agreementStatusIndex: 1,
     agreementStatusLabel: '履约中',
     loading: true,
-    revenueSubmitting: false
+    revenueSubmitting: false,
+    accessDenied: false
   },
 
   onShow() { this.load(); },
@@ -82,7 +83,12 @@ Page({
         stats
       });
     } catch (error) {
-      wx.showToast({ title: error.message || '\u52a0\u8f7d\u5931\u8d25', icon: 'none' });
+      const message = error.message || '\u52a0\u8f7d\u5931\u8d25';
+      wx.showToast({ title: message, icon: 'none' });
+      if (/\u65e0\u6743|\u6743\u9650|\u7ba1\u7406\u5458/.test(message)) {
+        this.setData({ accessDenied: true });
+        wx.switchTab({ url: '/pages/profile/profile' });
+      }
     } finally {
       this.setData({ loading: false });
     }

@@ -23,7 +23,20 @@ function requireVerified(user, options = {}) {
   return true;
 }
 
+function requireResident(user, options = {}) {
+  if (!requireVerified(user, options)) return false;
+  if (user.role === 'merchant') {
+    wx.showToast({
+      title: options.merchantMessage || '商家账号不能参与邻里互动',
+      icon: 'none'
+    });
+    return false;
+  }
+  return true;
+}
+
 module.exports = {
   call,
-  requireVerified
+  requireVerified,
+  requireResident
 };

@@ -34,6 +34,12 @@ function canManagePost(user, post) {
   );
 }
 
+function canViewPostContact(viewer, isAuthor, requested) {
+  return Boolean(
+    requested && viewer && viewer.verified && !viewer.banned && (isAuthor || viewer.role !== 'merchant')
+  );
+}
+
 function publicComment(comment) {
   return {
     _id: comment._id,
@@ -66,7 +72,7 @@ exports.main = async (event) => {
     .limit(50)
     .get();
 
-  const canViewContact = event.withContact && viewer && viewer.verified && !viewer.banned;
+  const canViewContact = canViewPostContact(viewer, isAuthor, event.withContact);
   if (event.withContact && canViewContact) {
     await db.collection('contact_logs').add({
       data: {
@@ -105,3 +111,5 @@ exports.main = async (event) => {
     comments: commentRes.data.map(publicComment)
   };
 };
+
+exports._test = { canViewPostContact };

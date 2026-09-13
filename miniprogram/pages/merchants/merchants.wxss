@@ -4,11 +4,11 @@
 .merchant-tags { display: flex; flex-wrap: wrap; gap: 10rpx; margin-top: 14rpx; }
 .merchant-desc { margin-top: 18rpx; color: #475569; font-size: 27rpx; line-height: 1.62; white-space: pre-wrap; }
 .merchant-block { margin-top: 18rpx; padding: 18rpx; border-left: 6rpx solid #bfdbfe; border-radius: 0 12rpx 12rpx 0; background: #f8fbff; }
-.merchant-label { color: #1e40af; font-size: 24rpx; font-weight: 700; }
+.merchant-label { color: #1e40af; font-size: 14px; font-weight: 700; }
 .merchant-copy { margin-top: 6rpx; color: #334155; font-size: 26rpx; line-height: 1.55; white-space: pre-wrap; }
 .verified-tag { background: #f0fdf4; color: #166534; }
 .case-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10rpx; margin-top: 18rpx; }
 .case-gallery image { width: 100%; height: 176rpx; border-radius: 12rpx; background: #eef2f7; }
-.merchant-note { margin-top: 18rpx; color: #64748b; font-size: 24rpx; line-height: 1.5; }
+.merchant-note { margin-top: 18rpx; color: #64748b; font-size: 14px; line-height: 1.5; }
 .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16rpx; }
 .action-grid .button-primary, .action-grid .button-secondary { min-width: 0; }

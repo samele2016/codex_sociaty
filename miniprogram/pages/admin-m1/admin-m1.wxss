@@ -1,6 +1,6 @@
 .admin-m1-page { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
 .panel-tabs { position: sticky; z-index: 4; top: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 16px; padding: 4px; border: 1px solid #e3e9f1; border-radius: 8px; background: rgba(255,255,255,.96); }
-.panel-tab { display: flex; min-height: 42px; align-items: center; justify-content: center; border-radius: 6px; color: #667085; font-size: 15px; font-weight: 600; }
+.panel-tab { display: flex; min-height: 44px; align-items: center; justify-content: center; border-radius: 6px; color: #667085; font-size: 15px; font-weight: 600; }
 .panel-tab.active { background: #1769e0; color: #fff; }
 .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14rpx; margin-bottom: 22rpx; }
 .stat-card { min-height: 130rpx; padding: 22rpx 14rpx; border: 1rpx solid #dbeafe; border-radius: 16rpx; background: #fff; text-align: center; }
@@ -9,8 +9,8 @@
 .field { margin-bottom: 18rpx; }
 .field input, .field textarea, .form-row input { background: #f8fbff; }
 .field textarea { min-height: 150rpx; }
-.upload-button { margin: 0 0 14rpx; min-height: 62rpx; line-height: 62rpx; }
-.picker-line { margin-top: 14rpx; min-height: 64rpx; padding: 0 20rpx; border: 1rpx solid #d9e4f2; border-radius: 16rpx; background: #f8fbff; color: #1e40af; line-height: 64rpx; font-size: 25rpx; }
+.upload-button { margin: 0 0 14rpx; min-height: 44px; line-height: 44px; }
+.picker-line { display: flex; min-height: 44px; align-items: center; margin-top: 14rpx; padding: 8px 10px; border: 1rpx solid #d9e4f2; border-radius: 8px; background: #f8fbff; color: #1e40af; font-size: 15px; line-height: 1.4; }
 .form-row { display: flex; gap: 14rpx; margin-bottom: 18rpx; }
 .form-row input { flex: 1; min-width: 0; }
 .record-row { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; padding: 20rpx 0; border-bottom: 1rpx solid #eef2f7; }
@@ -27,9 +27,9 @@
 .privacy-content { margin: 10rpx 0; color: #334155; font-size: 26rpx; line-height: 1.55; white-space: pre-wrap; }
 .compact-field { margin: 18rpx 0 0; }
 .compact-checks { display: flex; flex-wrap: wrap; gap: 8rpx 18rpx; }
-.compact-check { display: flex; align-items: center; min-height: 48rpx; color: #475569; font-size: 24rpx; }
+.compact-check { display: flex; align-items: center; min-height: 44px; color: #475569; font-size: 14px; }
 .row { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 14rpx; }
-.row button { min-height: 56rpx; line-height: 56rpx; padding: 0 18rpx; }
+.row button { min-height: 44px; line-height: 44px; padding: 0 12px; }
 
 @media (min-width: 900px) {
   .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }

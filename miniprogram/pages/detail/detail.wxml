@@ -23,7 +23,7 @@
         <text>{{item.value}}</text>
       </view>
     </view>
-    <view class="actions">
+    <view wx:if="{{canInteract}}" class="actions">
       <button size="mini" bindtap="toggleLike">赞 {{post.likeCount || 0}}</button>
       <button size="mini" bindtap="toggleFavorite">收藏 {{post.favoriteCount || 0}}</button>
       <button size="mini" bindtap="report">举报</button>
@@ -33,6 +33,7 @@
   <view class="section">
     <view class="title title-sm">联系方式</view>
     <view wx:if="{{post.contact}}" class="contact">{{post.contact}}</view>
+    <view wx:elif="{{isMerchant}}" class="helper">商家账号不可查看住户联系方式；仅可在已分配的装修线索中查看已授权信息。</view>
     <button wx:else class="button-secondary" bindtap="showContact">认证后查看联系方式</button>
   </view>
 
@@ -43,7 +44,7 @@
       <view>{{item.content}}</view>
     </view>
     <view wx:if="{{comments.length === 0}}" class="muted">还没有评论</view>
-    <view class="comment-box">
+    <view wx:if="{{canInteract}}" class="comment-box">
       <input placeholder="写下你的回复" value="{{comment}}" bindinput="onCommentInput" />
       <button size="mini" class="button-primary button-inline" bindtap="submitComment">发送</button>
     </view>

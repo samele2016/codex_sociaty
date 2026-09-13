@@ -1,5 +1,4 @@
 <view class="page delivery-page">
-  <view class="back-link" bindtap="goBack"><text class="back-arrow">‹</text><text>返回首页</text></view>
   <view class="delivery-hero">
     <view class="eyebrow">交付前服务</view>
     <view class="hero-title">{{communityName}}交付中心</view>

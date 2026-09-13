@@ -11,7 +11,7 @@
   background: #eef4e9;
   color: #276749;
   border-radius: 10rpx;
-  font-size: 24rpx;
+  font-size: 14px;
 }
 
 .small {
@@ -32,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 84rpx;
+  min-height: 44px;
   padding: 12rpx 0;
   border-bottom: 1rpx solid #e7edf5;
 }
@@ -59,7 +59,7 @@
 .category-check {
   display: flex;
   align-items: center;
-  min-height: 64rpx;
+  min-height: 44px;
   gap: 8rpx;
 }
 

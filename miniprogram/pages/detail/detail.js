@@ -1,5 +1,5 @@
 const app = getApp();
-const { call, requireVerified } = require('../../utils/api');
+const { call, requireResident } = require('../../utils/api');
 
 Page({
   data: {
@@ -9,7 +9,9 @@ Page({
     comment: '',
     loading: true,
     contactVisible: false,
-    user: null
+    user: null,
+    canInteract: false,
+    isMerchant: false
   },
 
   onLoad(options) {
@@ -26,7 +28,9 @@ Page({
         user,
         post: res.post,
         comments: res.comments,
-        contactVisible: Boolean(res.post.contact)
+        contactVisible: Boolean(res.post.contact),
+        canInteract: Boolean(user && user.verified && !user.banned && user.role !== 'merchant'),
+        isMerchant: Boolean(user && user.role === 'merchant')
       });
     } catch (error) {
       wx.showToast({ title: '加载失败', icon: 'none' });
@@ -37,7 +41,7 @@ Page({
 
   async showContact() {
     const user = await app.ensureUser();
-    if (!requireVerified(user)) {
+    if (!requireResident(user, { merchantMessage: '商家账号不可查看住户联系方式' })) {
       return;
     }
     this.loadDetail(true);
@@ -49,7 +53,7 @@ Page({
 
   async submitComment() {
     const user = await app.ensureUser();
-    if (!requireVerified(user)) {
+    if (!requireResident(user)) {
       return;
     }
     if (!this.data.comment.trim()) {
@@ -65,16 +69,30 @@ Page({
   },
 
   async toggleLike() {
-    await call('toggleLikeFavorite', { postId: this.data.id, type: 'like' });
-    this.loadDetail(false);
+    const user = await app.ensureUser();
+    if (!requireResident(user)) return;
+    try {
+      await call('toggleLikeFavorite', { postId: this.data.id, type: 'like' });
+      this.loadDetail(false);
+    } catch (error) {
+      wx.showToast({ title: error.message || '操作失败', icon: 'none' });
+    }
   },
 
   async toggleFavorite() {
-    await call('toggleLikeFavorite', { postId: this.data.id, type: 'favorite' });
-    this.loadDetail(false);
+    const user = await app.ensureUser();
+    if (!requireResident(user)) return;
+    try {
+      await call('toggleLikeFavorite', { postId: this.data.id, type: 'favorite' });
+      this.loadDetail(false);
+    } catch (error) {
+      wx.showToast({ title: error.message || '操作失败', icon: 'none' });
+    }
   },
 
-  report() {
+  async report() {
+    const user = await app.ensureUser();
+    if (!requireResident(user)) return;
     wx.showActionSheet({
       itemList: ['广告骚扰', '交易风险', '不实信息', '不友善内容'],
       success: async (res) => {

@@ -66,10 +66,6 @@ Page({
     }
   },
 
-  goBack() {
-    wx.navigateBack({ delta: 1, fail: () => wx.switchTab({ url: '/pages/index/index' }) });
-  },
-
   async openPublish() {
     const publishCategory = this.data.category === 'all' ? 'renovation' : this.data.category;
     const returnUrl = `/pages/channel/channel?category=${this.data.category}`;

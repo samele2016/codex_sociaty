@@ -3,13 +3,17 @@ const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
-async function getEligibleUser(openid) {
-  const result = await db.collection('users').where({ _openid: openid }).limit(1).get();
-  const user = result.data[0];
+function assertEligibleUser(user) {
   if (!user) throw new Error('请先登录');
   if (user.banned) throw new Error('账号已被限制');
   if (!user.verified) throw new Error('请先完成社区认证');
+  if (user.role === 'merchant') throw new Error('商家账号不能参与邻里互动');
   return user;
+}
+
+async function getEligibleUser(openid) {
+  const result = await db.collection('users').where({ _openid: openid }).limit(1).get();
+  return assertEligibleUser(result.data[0]);
 }
 
 async function assertReportableTarget(targetType, targetId) {
@@ -58,3 +62,5 @@ exports.main = async (event) => {
   });
   return { id: result._id };
 };
+
+exports._test = { assertEligibleUser };

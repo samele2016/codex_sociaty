@@ -24,7 +24,6 @@ Page({
   },
 
   switchTab(event) { this.setData({ activeTab: event.currentTarget.dataset.tab }); },
-  goBack() { wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/index/index' }) }); },
   openRenovation() { wx.navigateTo({ url: '/pages/renovation-request/renovation-request' }); },
   openInspection() { wx.navigateTo({ url: '/pages/inspection/inspection' }); },
   openBudget() { wx.navigateTo({ url: '/pages/budget/budget' }); },

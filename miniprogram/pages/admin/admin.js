@@ -16,7 +16,8 @@ Page({
     isSystemAdmin: false,
     canReviewOwners: false,
     stats: null,
-    loading: true
+    loading: true,
+    accessDenied: false
   },
 
   onShow() {
@@ -38,7 +39,12 @@ Page({
         stats: res.stats
       });
     } catch (error) {
-      wx.showToast({ title: error.message || '无权访问', icon: 'none' });
+      const message = error.message || '无权访问';
+      wx.showToast({ title: message, icon: 'none' });
+      if (/无权|权限|管理员/.test(message)) {
+        this.setData({ accessDenied: true });
+        wx.switchTab({ url: '/pages/profile/profile' });
+      }
     } finally {
       this.setData({ loading: false });
     }
