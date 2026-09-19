@@ -19,6 +19,7 @@
 
 - `scripts/validate-project.ps1`：通过，输出 `PROJECT_VALIDATION_OK`。
 - `scripts/test-role-permissions.cjs`：通过，输出 `ROLE_PERMISSION_TESTS_OK`。
+- `scripts/test-page-role-guards.cjs`：通过，输出 `PAGE_ROLE_GUARD_TESTS_OK`；覆盖商家详情页互动阻断、业主议题编辑器阻断，以及普通住户直达管理后台/M1 运营中心后的退出逻辑。
 - UI 静态扫描：未再发现 `12px`、`20-24rpx` 字号或小于 `44px` 的已知点击目标模式。
 - 修复文件已按文件同步至 `D:\WeChatProjects\YueShiFu_MiniSociety`。
 - `getPostDetail`、`toggleLikeFavorite`、`reportContent` 已通过 CloudBase CLI 部署成功。
@@ -33,3 +34,5 @@
 ```
 
 生产环境仍应使用三类真实 OpenID 再确认一次：商家打不开联系方式、点赞收藏和业主议题；住户直达管理页会被退回个人中心。
+
+2026-09-19 补充：再次尝试启动官方自动化端口，开发者工具仍报告“服务端口已关闭”。在不改变安全设置的前提下，已使用上述页面角色守卫测试补齐前端确定性回归；真实模拟器测试仍保留为人工环境验收项。
