@@ -20,19 +20,18 @@
 - `scripts/validate-project.ps1`：通过，输出 `PROJECT_VALIDATION_OK`。
 - `scripts/test-role-permissions.cjs`：通过，输出 `ROLE_PERMISSION_TESTS_OK`。
 - `scripts/test-page-role-guards.cjs`：通过，输出 `PAGE_ROLE_GUARD_TESTS_OK`；覆盖商家详情页互动阻断、业主议题编辑器阻断，以及普通住户直达管理后台/M1 运营中心后的退出逻辑。
+- `scripts/role-runtime-e2e.cjs`：在微信开发者工具模拟器中完成 32 项运行态回归，32 项通过、0 项失败、P0/P1 均为 0。
 - UI 静态扫描：未再发现 `12px`、`20-24rpx` 字号或小于 `44px` 的已知点击目标模式。
 - 修复文件已按文件同步至 `D:\WeChatProjects\YueShiFu_MiniSociety`。
 - `getPostDetail`、`toggleLikeFavorite`、`reportContent` 已通过 CloudBase CLI 部署成功。
 
-## 待人工环境验证
+## 运行态验证
 
-微信开发者工具的“服务端口”目前关闭，官方 `miniprogram-automator` 无法连接，因此本轮未重新生成三身份模拟器运行时报告。开启“设置 → 安全设置 → 服务端口”后，应重新执行：
+2026-09-19 已开启微信开发者工具服务端口，并通过官方 `miniprogram-automator` 完成公共链路、普通住户、系统管理员和商家四组运行态测试。报告写入 `docs/test-evidence-20260913/role-runtime-results.json`。
 
 ```powershell
 & 'D:\微信web开发者工具\cli.bat' auto --project 'D:\WeChatProjects\YueShiFu_MiniSociety' --auto-port 9420 --trust-project --lang zh
-& 'D:\Program Files\nodejs\node.exe' 'C:\Users\neo\Documents\社区助手\scripts\role-runtime-e2e.cjs'
+& 'D:\Program Files\nodejs\node.exe' 'C:\Users\neo\Documents\社区助手\scripts\role-runtime-e2e.cjs' '--ws=ws://127.0.0.1:9420'
 ```
 
-生产环境仍应使用三类真实 OpenID 再确认一次：商家打不开联系方式、点赞收藏和业主议题；住户直达管理页会被退回个人中心。
-
-2026-09-19 补充：再次尝试启动官方自动化端口，开发者工具仍报告“服务端口已关闭”。在不改变安全设置的前提下，已使用上述页面角色守卫测试补齐前端确定性回归；真实模拟器测试仍保留为人工环境验收项。
+本轮已确认商家不能查看普通帖子联系方式、不能评论/点赞收藏或参与业主议题；普通住户直达管理页会退回个人中心；管理员 M1 运营操作链路正常。正式发布前仍建议使用生产环境的真实 OpenID 做一次三身份冒烟验收。
